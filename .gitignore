@@ -1,0 +1,6 @@
+# 백업 및 임시 파일
+*.bak
+*.bak*
+*.tmp
+.DS_Store
+Thumbs.db
