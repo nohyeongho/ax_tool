@@ -450,7 +450,7 @@ body.fullscreen-wall-only .idea-focus-clone .ntop span:last-child{font-size:10px
 <div id="dashAuthModal" class="modalbg hide" role="dialog" aria-modal="true" aria-labelledby="dashAuthTitle">
   <div class="modal">
     <h3 id="dashAuthTitle">🔒 대시보드 비밀번호 확인</h3>
-    <div class="desc" style="margin:8px 0 16px;color:#64748b;font-size:13px">대시보드 화면에 접근하려면 비밀번호를 입력해 주세요.</div>
+    <div id="dashAuthDesc" class="desc" style="margin:8px 0 16px;color:#64748b;font-size:13px">대시보드 화면에 접근하려면 비밀번호를 입력해 주세요.</div>
     <div class="field">
       <label for="dashPasswordInput" style="font-size:13px;font-weight:700">비밀번호</label>
       <input id="dashPasswordInput" type="password" placeholder="비밀번호 입력" autocomplete="off" style="width:100%;border:1px solid #d8dee7;border-radius:12px;padding:12px 14px;font-size:16px;outline:none;transition:border-color .2s;margin-top:6px">
@@ -767,11 +767,11 @@ const fullscreenWallObserver=new MutationObserver(()=>{if(document.body.classLis
 fullscreenWallObserver.observe($('wall'),{childList:true,subtree:false});
 window.addEventListener('resize',fitFullscreenWall,{passive:true});
 function updateFullscreenButton(){const active=isFullscreenActive(),button=$('fullscreenBtn');document.body.classList.toggle('fullscreen-wall-only',active);if(active){$('formView').classList.add('hide');$('dashView').classList.remove('hide');$('admin').classList.add('hide');$('wall').classList.remove('hide');mode='wall'}button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active));$('fullscreenIcon').textContent=active?'🗗':'⛶';$('fullscreenLabel').textContent=active?'전체 화면 해제':'전체 화면';button.title=active?'전체 화면 해제 (Esc)':'전체 화면 전환';setTimeout(fitFullscreenWall,40)}
-$('fullscreenBtn').addEventListener('click',()=>isFullscreenActive()?exitFullscreen():enterFullscreen());
+$('fullscreenBtn').addEventListener('click',()=>isFullscreenActive()?exitFullscreen():openAuthModal('fullscreen'));
 ['fullscreenchange','webkitfullscreenchange','MSFullscreenChange'].forEach(eventName=>document.addEventListener(eventName,updateFullscreenButton));
 document.addEventListener('keydown',e=>{
  if((e.key==='f'||e.key==='F')&&!e.ctrlKey&&!e.metaKey&&!e.altKey&& !['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName)){
-  e.preventDefault();isFullscreenActive()?exitFullscreen():enterFullscreen();
+  e.preventDefault();isFullscreenActive()?exitFullscreen():openAuthModal('fullscreen');
  }
 });
 updateFullscreenButton();
@@ -866,20 +866,43 @@ if (isFirebaseConnected && db) {
   function updateFontPreview(){const size=Math.min(32,Math.max(16,Number($('fontSize').value)||20));$('fontSizeValue').textContent=size+'px';$('fontPreview').style.fontSize=size+'px';$('fontPreview').style.fontFamily=noteFont(selectedNoteFont());$('fontPreview').textContent=selectedNoteFont()==='gaegu'?'개구체 미리보기입니다.':selectedNoteFont()==='melody'?'하이멜로디체 미리보기입니다.':'나눔 펜글씨 미리보기입니다.'}function setChoice(group,button,valueId,dataName){group.querySelectorAll('.choice-btn').forEach(b=>{const on=b===button;b.classList.toggle('on',on);b.setAttribute('aria-checked',String(on))});$(valueId).value=button.dataset[dataName];updateFontPreview()}$('toolChoices').addEventListener('click',e=>{const b=e.target.closest('.tool-choice');if(b)setChoice($('toolChoices'),b,'toolName','value')});$('fontChoices').addEventListener('click',e=>{const b=e.target.closest('.font-choice');if(b)setChoice($('fontChoices'),b,'fontKey','font')});
   $('fontSize').addEventListener('input',updateFontPreview);updateFontPreview();
   $('formTab').onclick=()=>show('form');/* [수정 의도] 사용자가 대시보드 탭을 선택할 때 비밀번호(18)를 확인하는 인증 모달 로직 연결 */
-  const DASH_PASSWORD = '18';
-  function openDashAuth() {
-    if (view === 'dash') return;
+  /* [수정 의도] 대시보드 탭 및 전체 화면 진입 시 비번(18) 확인을 위한 공통 인증 모달 로직 */
+  const AUTH_PASSWORD = '18';
+  let authTargetAction = 'dash'; // 'dash' | 'fullscreen'
+
+  function openAuthModal(target) {
+    if (target === 'dash' && view === 'dash') return;
+    authTargetAction = target;
     const modal = $('dashAuthModal');
     const input = $('dashPasswordInput');
     const err = $('dashAuthError');
-    if (!modal || !input) { show('dash'); return; }
+    const title = $('dashAuthTitle');
+    const desc = $('dashAuthDesc');
+
+    if (!modal || !input) {
+      if (target === 'fullscreen') enterFullscreen();
+      else show('dash');
+      return;
+    }
+
+    if (title && desc) {
+      if (target === 'fullscreen') {
+        title.textContent = '🔒 전체 화면 비밀번호 확인';
+        desc.textContent = '전체 화면으로 전환하려면 비밀번호를 입력해 주세요.';
+      } else {
+        title.textContent = '🔒 대시보드 비밀번호 확인';
+        desc.textContent = '대시보드 화면에 접근하려면 비밀번호를 입력해 주세요.';
+      }
+    }
+
     input.value = '';
     input.style.borderColor = '#d8dee7';
     if (err) err.style.display = 'none';
     modal.classList.remove('hide');
     setTimeout(() => input.focus(), 60);
   }
-  function closeDashAuth() {
+
+  function closeAuthModal() {
     const modal = $('dashAuthModal');
     if (modal) modal.classList.add('hide');
     const input = $('dashPasswordInput');
@@ -887,13 +910,19 @@ if (isFirebaseConnected && db) {
     const err = $('dashAuthError');
     if (err) err.style.display = 'none';
   }
-  function verifyDashAuth() {
+
+  function verifyAuthModal() {
     const input = $('dashPasswordInput');
     const err = $('dashAuthError');
     if (!input) return;
-    if (input.value.trim() === DASH_PASSWORD) {
-      closeDashAuth();
-      show('dash');
+    if (input.value.trim() === AUTH_PASSWORD) {
+      const action = authTargetAction;
+      closeAuthModal();
+      if (action === 'fullscreen') {
+        enterFullscreen();
+      } else {
+        show('dash');
+      }
     } else {
       if (err) err.style.display = 'block';
       input.style.borderColor = '#dc2626';
@@ -901,19 +930,20 @@ if (isFirebaseConnected && db) {
       input.focus();
     }
   }
-  $('dashTab').onclick = openDashAuth;
-  $('cancelDashAuth').onclick = closeDashAuth;
-  $('confirmDashAuth').onclick = verifyDashAuth;
+
+  $('dashTab').onclick = () => openAuthModal('dash');
+  $('cancelDashAuth').onclick = closeAuthModal;
+  $('confirmDashAuth').onclick = verifyAuthModal;
   $('dashPasswordInput').addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      verifyDashAuth();
+      verifyAuthModal();
     } else if (e.key === 'Escape') {
-      closeDashAuth();
+      closeAuthModal();
     }
   });
   $('dashAuthModal').addEventListener('click', (e) => {
-    if (e.target === $('dashAuthModal')) closeDashAuth();
+    if (e.target === $('dashAuthModal')) closeAuthModal();
   });$('closeAdmin').onclick=()=>toggleAdmin(true);$('brand').onclick=()=>{clicks++;clearTimeout(timer);$('hint').textContent='';if(clicks>=3){clicks=0;show('dash');if(mode!=='admin')toggleAdmin()}else timer=setTimeout(()=>{clicks=0;$('hint').textContent=''},1500)};window.addEventListener('storage',e=>{if(e.key===THEME_KEY&&e.newValue){applyTheme(e.newValue,false);return}if(e.key===DELETED_THEME_KEY){deletedThemes=new Set(JSON.parse(e.newValue||'[]')||[]);renderThemeChoices();if(deletedThemes.has(selectedTheme))applyTheme(ALL_THEMES.find(x=>!deletedThemes.has(x))||'',false);return}if(e.key===DELETED_KEY&&e.newValue){deletedIds=new Set(JSON.parse(e.newValue)||[]);ideas=ideas.filter(x=>!deletedIds.has(String(x.id)));render();return}if(e.key===KEY&&e.newValue){ideas=normalizeIdeas(JSON.parse(e.newValue)||[]);render()}});if('BroadcastChannel'in window){channel=new BroadcastChannel(CH);channel.onmessage=e=>{const data=e.data||{};if(data.type==='theme'){applyTheme(data.theme,false);return}if(data.type==='theme-delete'){deletedThemes.add(data.theme);localStorage.setItem(DELETED_THEME_KEY,JSON.stringify([...deletedThemes]));renderThemeChoices();if(selectedTheme===data.theme)applyTheme(ALL_THEMES.find(x=>!deletedThemes.has(x))||'',false);return}if(data.type==='theme-restore'){restoreThemes(false);return}if(data.type==='delete'){deleteIdea(data.id,false);return}const item=data.type==='add'?data.item:data;if(item?.id&&!deletedIds.has(String(item.id))&&!ideas.some(x=>String(x.id)===String(item.id))){ideas.unshift(item);save();render()}}}
   renderThemeChoices();applyTheme(selectedTheme,false);render();show('form');
 </script>
