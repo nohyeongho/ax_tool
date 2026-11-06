@@ -664,24 +664,53 @@ $('wall').addEventListener('click', e => {
   });
 $('wall').addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.closest('[data-note-id]')){e.preventDefault();focusIdea(e.target.closest('[data-note-id]').dataset.noteId)}});
 $('clearFocus').onclick=clearIdeaFocus;document.addEventListener('keydown',e=>{if(e.key==='Escape'&&focusedIdeaId)clearIdeaFocus()});
-function deleteIdea(id,broadcast=true){
-  id=String(id??'').trim();
-  if(!id)return;
-  const index=ideas.findIndex(x=>String(x?.id)===id);
-  const item=index>=0?ideas[index]:null;
-  const label=item?`${item.drawNo||'번호 없음'} / ${item.product||'분야 없음'} / ${item.name||'이름 없음'}`:`ID ${id}`;
+/* [수정 의도] 사용자 요청에 따라 메모 삭제 시 Firebase Cloud Firestore 서버에서도 즉시 영구 삭제하도록 연동 */
+function deleteIdea(id, broadcast=true){
+  id = String(id??'').trim();
+  if(!id) return;
+  const index = ideas.findIndex(x => String(x?.id) === id);
+  const item = index >= 0 ? ideas[index] : null;
+  const label = item ? `${item.drawNo || '번호 없음'} / ${item.tool || item.product || '분야 없음'} / ${item.name || '이름 없음'}` : `ID ${id}`;
   if(broadcast){
-    let approved=true;
-    try{approved=window.confirm(`다음 메모를 삭제하시겠습니까?\n\n${label}\n\n삭제 후 아이디어 월에서도 즉시 제거되며 복구할 수 없습니다.`)}catch(error){approved=true}
-    if(!approved)return;
+    let approved = true;
+    try {
+      approved = window.confirm(`다음 메모를 삭제하시겠습니까?\n\n${label}\n\n삭제 시 대시보드와 Firebase 서버에서 모두 영구 삭제됩니다.`);
+    } catch(error) { approved = true; }
+    if(!approved) return;
   }
   deletedIds.add(id);
-  ideas=ideas.filter(x=>String(x?.id)!==id);
-  if(String(focusedIdeaId)===id){focusedIdeaId=null;$('wall').classList.remove('has-focus');$('focusBackdrop').classList.remove('show');$('clearFocus').classList.add('hide')}
+  ideas = ideas.filter(x => String(x?.id) !== id);
+
+  // [Firebase Firestore 서버에서 즉시 영구 삭제]
+  if (isFirebaseConnected && db) {
+    db.collection('ideas').doc(id).delete()
+      .then(() => {
+        console.log('[Firebase] 서버에서 문서 삭제 완료:', id);
+      })
+      .catch(err => {
+        console.error('[Firebase] 서버 삭제 에러:', err);
+      });
+
+    // 혹시 문서 ID가 다르게 등록된 경우를 대비한 2차 안전 삭제
+    db.collection('ideas').where('id', '==', id).get()
+      .then(snap => {
+        snap.forEach(doc => {
+          if (doc.id !== id) doc.ref.delete();
+        });
+      })
+      .catch(() => {});
+  }
+
+  if(String(focusedIdeaId) === id){
+    focusedIdeaId = null;
+    $('wall').classList.remove('has-focus');
+    $('focusBackdrop').classList.remove('show');
+    $('clearFocus').classList.add('hide');
+  }
   save();
   render();
-  notice(`메모 ${item?.drawNo||id}를 관리자 목록과 아이디어 월에서 삭제했습니다.`);
-  if(broadcast)channel?.postMessage({type:'delete',id});
+  notice(`메모 ${item?.drawNo || id}를 삭제했습니다.`);
+  if(broadcast) channel?.postMessage({type:'delete', id});
 }
 /* 동적으로 다시 그려지는 삭제 버튼도 안정적으로 처리 */
 document.addEventListener('click',e=>{
