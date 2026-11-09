@@ -621,6 +621,49 @@ body.fullscreen-wall-only #wall .note[data-tool-key="qbot"] .pin {
     border-radius: 10px !important;
   }
 }
+
+/* [수정 의도] 비밀번호 모달을 전체화면 및 확대 카드보다 항상 위에 표시 (z-index 최상위) */
+.modalbg {
+  z-index: 999999 !important;
+}
+.note-delete-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid rgba(113,82,58,.25);
+  background: rgba(255,255,255,.88);
+  color: #71523a;
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  opacity: .7;
+  transition: all .18s ease;
+  z-index: 100 !important;
+  pointer-events: auto !important;
+  padding: 0;
+}
+.note-delete-btn:hover {
+  opacity: 1;
+  background: #fee2e2;
+  color: #dc2626;
+  border-color: #f87171;
+  transform: scale(1.15);
+  box-shadow: 0 2px 8px rgba(220,38,38,.3);
+}
+.idea-focus-clone .note-delete-btn {
+  opacity: 0.9 !important;
+  width: 28px !important;
+  height: 28px !important;
+  font-size: 14px !important;
+  top: 10px !important;
+  right: 10px !important;
+}
 </style></head><body class="theme-stadium">
 <header><div class="head"><button id="brand" class="brand"><span class="logo">💡</span><span><span class="title">AX Tool 활용 아이디어</span><span class="sub">업무 개선 아이디어 공유 보드 <b id="hint"></b></span></span></button><div class="actions"><span class="status">● 이 브라우저에 저장</span><button id="formTab" class="btn on">참여 화면</button><button id="dashTab" class="btn">대시보드</button><button id="fullscreenBtn" type="button" class="btn fullscreen-btn" title="전체 화면 전환" aria-label="전체 화면 전환" aria-pressed="false"><span id="fullscreenIcon" class="fullscreen-icon">⛶</span><span id="fullscreenLabel" class="fullscreen-label">전체 화면</span></button></div></div></header><div id="techOlympicsVisual" class="tech-olympics-visual" aria-hidden="true"><div id="olympicsBgA" class="olympics-bg active" style="background-image: url(&quot;https://live.lge.co.kr/wp-content/uploads/2024/11/2411-lg-service-3.jpg&quot;);"></div><div id="olympicsBgB" class="olympics-bg"></div><div class="olympics-shade"></div></div><div id="focusBackdrop" class="focus-backdrop" aria-hidden="true"></div>
 <main><section id="formView" class=""><form id="ideaForm" class="form"><h2>AX Tool 활용 경험과 아이디어를 남겨주세요</h2><div class="desc">LGSC 또는 Qbot 사용시 경험과 원하는 기능을 자유롭게 작성해 주세요.</div>
@@ -855,7 +898,6 @@ async function focusIdea(id){id=String(id);if(focusMotionBusy)return;if(focusedI
       e.preventDefault();
       const id = delBtn.dataset.deleteId;
       if (id) {
-        clearIdeaFocus();
         deleteIdea(id);
       }
       return;
@@ -883,19 +925,19 @@ $('wall').addEventListener('click', e => {
 $('wall').addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.closest('[data-note-id]')){e.preventDefault();focusIdea(e.target.closest('[data-note-id]').dataset.noteId)}});
 $('clearFocus').onclick=clearIdeaFocus;document.addEventListener('keydown',e=>{if(e.key==='Escape'&&focusedIdeaId)clearIdeaFocus()});
 /* [수정 의도] 사용자 요청에 따라 메모 삭제 시 Firebase Cloud Firestore 서버에서도 즉시 영구 삭제하도록 연동 */
+/* [수정 의도] 브라우저 기본 window.confirm 제거 및 비밀번호(18) 모달 확인창 호출 */
 function deleteIdea(id, broadcast=true){
+  id = String(id??'').trim();
+  if(!id) return;
+  openAuthModal('delete', id);
+}
+
+function executeDeleteIdea(id, broadcast=true){
   id = String(id??'').trim();
   if(!id) return;
   const index = ideas.findIndex(x => String(x?.id) === id);
   const item = index >= 0 ? ideas[index] : null;
-  const label = item ? `${item.drawNo || '번호 없음'} / ${item.tool || item.product || '분야 없음'} / ${item.name || '이름 없음'}` : `ID ${id}`;
-  if(broadcast){
-    let approved = true;
-    try {
-      approved = window.confirm(`다음 메모를 삭제하시겠습니까?\n\n${label}\n\n삭제 시 대시보드와 Firebase 서버에서 모두 영구 삭제됩니다.`);
-    } catch(error) { approved = true; }
-    if(!approved) return;
-  }
+
   deletedIds.add(id);
   ideas = ideas.filter(x => String(x?.id) !== id);
 
@@ -924,6 +966,9 @@ function deleteIdea(id, broadcast=true){
     $('wall').classList.remove('has-focus');
     $('focusBackdrop').classList.remove('show');
     $('clearFocus').classList.add('hide');
+    const clone = document.querySelector('.idea-focus-clone');
+    if (clone) clone.remove();
+    document.body.classList.remove('note-focus-active');
   }
   save();
   render();
@@ -1153,13 +1198,17 @@ $('fontChoices').addEventListener('click', e => {
 // 초기 기본 폰트 적용
 applyTextareaFont('pen');
   $('formTab').onclick=()=>show('form');/* [수정 의도] 사용자가 대시보드 탭을 선택할 때 비밀번호(18)를 확인하는 인증 모달 로직 연결 */
-  /* [수정 의도] 대시보드 탭 및 전체 화면 진입 시 비번(18) 확인을 위한 공통 인증 모달 로직 */
+  /* [수정 의도] 대시보드 탭, 전체 화면, 메모 삭제 진입 시 비번(18) 확인을 위한 공통 인증 모달 로직 */
   const AUTH_PASSWORD = '18';
-  let authTargetAction = 'dash'; // 'dash' | 'fullscreen'
+  let authTargetAction = 'dash'; // 'dash' | 'fullscreen' | 'delete'
+  let deletePendingId = null;
 
-  function openAuthModal(target) {
+  function openAuthModal(target, payload = null) {
     if (target === 'dash' && view === 'dash') return;
     authTargetAction = target;
+    if (target === 'delete') {
+      deletePendingId = payload;
+    }
     const modal = $('dashAuthModal');
     const input = $('dashPasswordInput');
     const err = $('dashAuthError');
@@ -1168,6 +1217,7 @@ applyTextareaFont('pen');
 
     if (!modal || !input) {
       if (target === 'fullscreen') enterFullscreen();
+      else if (target === 'delete') executeDeleteIdea(payload);
       else show('dash');
       return;
     }
@@ -1176,6 +1226,11 @@ applyTextareaFont('pen');
       if (target === 'fullscreen') {
         title.textContent = '🔒 전체 화면 비밀번호 확인';
         desc.textContent = '전체 화면으로 전환하려면 비밀번호를 입력해 주세요.';
+      } else if (target === 'delete') {
+        const item = ideas.find(x => String(x?.id) === String(payload));
+        const itemLabel = item ? `${item.drawNo || ''} (${item.tool || '메모'})` : '해당 메모';
+        title.textContent = '🔒 메모 삭제 비밀번호 확인';
+        desc.textContent = `선택하신 [${itemLabel}] 메모를 영구 삭제하려면 비밀번호를 입력해 주세요. (삭제 후 복구되지 않습니다)`;
       } else {
         title.textContent = '🔒 대시보드 비밀번호 확인';
         desc.textContent = '대시보드 화면에 접근하려면 비밀번호를 입력해 주세요.';
@@ -1196,6 +1251,7 @@ applyTextareaFont('pen');
     if (input) input.value = '';
     const err = $('dashAuthError');
     if (err) err.style.display = 'none';
+    deletePendingId = null;
   }
 
   function verifyAuthModal() {
@@ -1204,9 +1260,12 @@ applyTextareaFont('pen');
     if (!input) return;
     if (input.value.trim() === AUTH_PASSWORD) {
       const action = authTargetAction;
+      const delId = deletePendingId;
       closeAuthModal();
       if (action === 'fullscreen') {
         enterFullscreen();
+      } else if (action === 'delete') {
+        if (delId) executeDeleteIdea(delId);
       } else {
         show('dash');
       }
