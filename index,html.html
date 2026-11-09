@@ -792,6 +792,10 @@ body.fullscreen-wall-only #wall .note[data-tool-key="qbot"] .pin {
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 <script>
+
+function $(x) { return document.getElementById(x); }
+function esc(v) { return String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
 const SEND_EMAIL_API_URL='https://YOUR-FUNCTION-APP.azurewebsites.net/api/send-idea-ppt';
 
 /* [수정 의도] Firebase(Firestore) 프로젝트 axtool-23cfa 연동
@@ -893,7 +897,7 @@ function isValidIdea(x){return !!(x&&typeof x==='object'&&(x.experience||x.wish|
   let ideas=(()=>{try{const raw=localStorage.getItem(KEY);return raw===null?normalizeIdeas(seed):normalizeIdeas(JSON.parse(raw))}catch{return normalizeIdeas(seed)}})();
 /* 이전 버전에서 저장된 빈 레코드(화면의 내용 없는 2번 항목)를 시작 즉시 제거 */
 localStorage.setItem(KEY,JSON.stringify(ideas));
-const $=x=>document.getElementById(x),esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+/* [수정 의도] $ 및 esc 함수를 스크립트 최상단으로 호이스팅하여 초기화 에러 방지 */
 const ALL_THEMES=['stadium','diagnostic','medal','toolboard','global'];
 function renderThemeChoices(){
  const cards=[...document.querySelectorAll('.theme-option[data-theme]')];
