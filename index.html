@@ -443,9 +443,92 @@ body.fullscreen-wall-only .idea-focus-clone .ntop span:last-child{font-size:10px
   .tool-choice.on .tool-choice-check{background:var(--lg);color:#fff;opacity:1;box-shadow:0 3px 9px rgba(165,0,52,.25)}
   @media(max-width:520px){.tool-choice{min-height:70px;padding:12px 14px}.tool-choice-name{font-size:26px}.tool-choice-check{width:20px;height:20px;font-size:12px;right:8px;top:8px}.form .field>label{font-size:17px}}
 
+
+/* [수정 의도] 글씨체 컴팩트 칩 및 LGSC/Qbot 분리 입력 영역 스타일 */
+.font-field-compact { margin-bottom: 20px; }
+.compact-font-grid { display: flex; gap: 8px; flex-wrap: wrap; }
+.compact-font-btn {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid #d8dee7;
+  background: #ffffff;
+  color: #475569;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.compact-font-btn[data-font="pen"] { font-family: 'Nanum Pen Script', cursive; font-size: 16px; }
+.compact-font-btn[data-font="gaegu"] { font-family: 'Gaegu', cursive; font-size: 15px; }
+.compact-font-btn[data-font="melody"] { font-family: 'Hi Melody', cursive; font-size: 15px; }
+.compact-font-btn.on {
+  border-color: var(--lg);
+  background: #fff1f2;
+  color: var(--lg);
+  box-shadow: 0 0 0 2px rgba(165,0,52,0.15);
+}
+.tool-section {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 16px 18px 8px;
+  margin-bottom: 20px;
+}
+.tool-section.lgsc-section { border-left: 4px solid var(--lg); }
+.tool-section.qbot-section { border-left: 4px solid #0284c7; }
+.tool-section-title { display: flex; align-items: center; margin-bottom: 12px; }
+.tool-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+.tool-badge.lgsc { background: #fff1f2; color: var(--lg); border: 1px solid #fecdd3; }
+.tool-badge.qbot { background: #f0f9ff; color: #0284c7; border: 1px solid #bae6fd; }
 </style></head><body class="theme-stadium">
 <header><div class="head"><button id="brand" class="brand"><span class="logo">💡</span><span><span class="title">AX Tool 활용 아이디어</span><span class="sub">업무 개선 아이디어 공유 보드 <b id="hint"></b></span></span></button><div class="actions"><span class="status">● 이 브라우저에 저장</span><button id="formTab" class="btn on">참여 화면</button><button id="dashTab" class="btn">대시보드</button><button id="fullscreenBtn" type="button" class="btn fullscreen-btn" title="전체 화면 전환" aria-label="전체 화면 전환" aria-pressed="false"><span id="fullscreenIcon" class="fullscreen-icon">⛶</span><span id="fullscreenLabel" class="fullscreen-label">전체 화면</span></button></div></div></header><div id="techOlympicsVisual" class="tech-olympics-visual" aria-hidden="true"><div id="olympicsBgA" class="olympics-bg active" style="background-image: url(&quot;https://live.lge.co.kr/wp-content/uploads/2024/11/2411-lg-service-3.jpg&quot;);"></div><div id="olympicsBgB" class="olympics-bg"></div><div class="olympics-shade"></div></div><div id="focusBackdrop" class="focus-backdrop" aria-hidden="true"></div>
-<main><section id="formView" class=""><form id="ideaForm" class="form"><h2>AX Tool 활용 경험과 아이디어를 남겨주세요</h2><div class="desc">LGSC 또는 Qbot 사용시 경험과 원하는 기능을 자유롭게 작성해 주세요.</div><div class="field"><label>활용 Tool 종류</label><input type="hidden" id="toolName" value="LGSC"><div class="choice-grid tool-icon-grid" id="toolChoices" role="radiogroup" aria-label="활용 Tool 종류"><button type="button" class="choice-btn tool-choice on" data-value="LGSC" role="radio" aria-checked="true"><span class="tool-choice-name">LGSC</span><span class="tool-choice-check" aria-hidden="true">✓</span></button><button type="button" class="choice-btn tool-choice" data-value="Qbot" role="radio" aria-checked="false"><span class="tool-choice-name">Qbot</span><span class="tool-choice-check" aria-hidden="true">✓</span></button></div></div><div class="field"><label for="experience">나의 AX Tool 사용경험을 알려주세요</label><textarea id="experience" required="" placeholder="실제 사용한 상황과 경험을 자유롭게 작성해 주세요."></textarea></div><div class="field"><label for="wish">나는 이런 AX Tool을 원해요~~</label><textarea id="wish" required="" placeholder="추가되었으면 하는 기능이나 개선 아이디어를 자유롭게 작성해 주세요."></textarea></div><div class="field"><label>메모 글씨체</label><input type="hidden" id="fontKey" value="pen"><div class="choice-grid font-choice-grid" id="fontChoices" role="radiogroup" aria-label="메모 글씨체"><button type="button" class="choice-btn font-choice on" data-font="pen" role="radio" aria-checked="true">나눔 펜글씨<small>자연스럽고 편안한 손글씨</small></button><button type="button" class="choice-btn font-choice" data-font="gaegu" role="radio" aria-checked="false">개구체<small>발랄하고 친근한 손글씨</small></button><button type="button" class="choice-btn font-choice" data-font="melody" role="radio" aria-checked="false">하이멜로디체<small>부드럽고 귀여운 손글씨</small></button></div></div><div class="field"><label for="fontSize">메모 글자 크기</label><div class="font-size-control"><input type="range" id="fontSize" min="16" max="32" step="1" value="20" aria-label="메모 글자 크기"><output id="fontSizeValue" class="font-size-value" for="fontSize">19px</output></div><div id="fontPreview" class="font-preview" style="font-size: 19px; font-family: &quot;Nanum Pen Script&quot;, &quot;나눔손글씨 펜&quot;, cursive;">나눔 펜글씨 미리보기입니다.</div></div><div class="twocol"><div class="field"><label for="empNo">사번</label><input id="empNo" required=""></div><div class="field"><label for="name">이름</label><input id="name" required=""></div></div><button class="submit">아이디어 제출하기</button><div id="formMsg" class="msg hide"></div></form></section>
+<main><section id="formView" class=""><form id="ideaForm" class="form"><h2>AX Tool 활용 경험과 아이디어를 남겨주세요</h2><div class="desc">LGSC 또는 Qbot 사용시 경험과 원하는 기능을 자유롭게 작성해 주세요.</div>
+
+  <!-- [수정 의도] 메모 글씨체를 폼 최상단에 작고 깔끔하게 배치 (글자크기는 최적 크기 20px로 자동 고정) -->
+  <div class="field font-field-compact">
+    <label style="font-size:13px;color:#64748b;margin-bottom:6px">메모 글씨체</label>
+    <input type="hidden" id="fontKey" value="pen">
+    <div class="compact-font-grid" id="fontChoices" role="radiogroup" aria-label="메모 글씨체">
+      <button type="button" class="compact-font-btn on" data-font="pen" role="radio" aria-checked="true">나눔 펜글씨</button>
+      <button type="button" class="compact-font-btn" data-font="gaegu" role="radio" aria-checked="false">개구체</button>
+      <button type="button" class="compact-font-btn" data-font="melody" role="radio" aria-checked="false">하이멜로디체</button>
+    </div>
+  </div>
+
+  <!-- [수정 의도] LGSC 전용 입력 섹션 -->
+  <div class="tool-section lgsc-section">
+    <div class="tool-section-title"><span class="tool-badge lgsc">LGSC</span></div>
+    <div class="field">
+      <label for="lgscExperience">LGSC 나의 AX Tool 사용경험을 알려주세요</label>
+      <textarea id="lgscExperience" placeholder="LGSC를 실제 사용한 상황과 경험을 작성해 주세요."></textarea>
+    </div>
+    <div class="field">
+      <label for="lgscWish">LGSC 나는 이런 AX Tool을 원해요~~</label>
+      <textarea id="lgscWish" placeholder="LGSC에 추가되었으면 하는 기능이나 개선 아이디어를 작성해 주세요."></textarea>
+    </div>
+  </div>
+
+  <!-- [수정 의도] Qbot 전용 입력 섹션 -->
+  <div class="tool-section qbot-section">
+    <div class="tool-section-title"><span class="tool-badge qbot">Qbot</span></div>
+    <div class="field">
+      <label for="qbotExperience">Qbot 나의 AX Tool 사용경험을 알려주세요</label>
+      <textarea id="qbotExperience" placeholder="Qbot을 실제 사용한 상황과 경험을 작성해 주세요."></textarea>
+    </div>
+    <div class="field">
+      <label for="qbotWish">Qbot 나는 이런 AX Tool을 원해요~~</label>
+      <textarea id="qbotWish" placeholder="Qbot에 추가되었으면 하는 기능이나 개선 아이디어를 작성해 주세요."></textarea>
+    </div>
+  </div>
+
+  <div class="twocol"><div class="field"><label for="empNo">사번</label><input id="empNo" required="" placeholder="사번 입력"></div><div class="field"><label for="name">이름</label><input id="name" required="" placeholder="이름 입력"></div></div><button class="submit">아이디어 제출하기</button><div id="formMsg" class="msg hide"></div></form></section>
   <section id="dashView" class="hide"><div class="stats"><div class="stat"><div id="total" class="num">0</div><div class="lab">전체 참여</div></div><div class="stat"><div id="lgscCount" class="num">0</div><div class="lab">LGSC</div></div><div class="stat"><div id="qbotCount" class="num">0</div><div class="lab">Qbot</div></div><div class="stat"><div id="todayCount" class="num">0</div><div class="lab">오늘 참여</div></div></div><div class="boardhead"><div><h2 id="dashTitle">실시간 아이디어 월</h2><div id="dashDesc" class="desc">새로운 아이디어가 가장 앞에 표시됩니다. 카드를 선택하면 확대됩니다.</div><div class="tool-color-legend" aria-label="활용 Tool별 메모 색상"><span class="tool-color-chip lgsc"><i></i>LGSC</span><span class="tool-color-chip qbot"><i></i>Qbot</span></div></div><div class="focus-toolbar"><button id="clearFocus" type="button" class="focus-clear hide">선택 해제</button></div></div><div id="wall" class="board" data-fit-scale="1.0000" style=""><div class="empty-board"><b>AX Tool 활용 경험과 아이디어를 모아보세요</b><p>참여 화면에서 첫 의견을 등록해 주세요.</p></div></div><div id="admin" class="listcard hide"><div class="listhead"><div><b>아이디어 통합 목록 · 관리자 모드</b><div class="desc">이름과 사번 원본이 표시됩니다. 이 관리 화면은 인증 기능이 없으므로 공개 배포 시 별도 접근 제어가 필요합니다.</div></div><div class="admin-actions"><button id="pptBtn" class="btn">PPT 출력</button><button id="mailBtn" class="btn primary">PPT 자동 발송</button><button id="closeAdmin" class="btn">닫기</button></div></div><div class="rolling-admin-panel"><div class="rolling-admin-head"><b>대시보드 배경 롤링 설정</b><div class="rolling-admin-actions"><button id="rollingApply" type="button" class="rolling-admin-btn primary">설정 적용</button><button id="rollingNextAdmin" type="button" class="rolling-admin-btn">다음 배경</button></div></div><div class="rolling-admin-grid"><div class="rolling-setting"><label for="rollingEnabledAdmin">자동 롤링</label><div class="rolling-switch"><input id="rollingEnabledAdmin" type="checkbox"><span>배경 자동 전환 사용</span></div></div><div class="rolling-setting"><label for="rollingIntervalAdmin">전환 간격 직접 입력</label><div style="display:flex;align-items:center;gap:7px"><input id="rollingIntervalAdmin" type="number" min="3" max="600" step="1" inputmode="numeric" value="8"><b>초</b></div></div><div class="rolling-setting"><label>현재 상태</label><div id="rollingStatusAdmin" class="rolling-status-admin" style="color: rgb(100, 116, 139);">자동 롤링 정지</div></div></div><div class="rolling-help">3초부터 600초까지 설정할 수 있습니다. 설정 적용 시 입력한 시간부터 새 간격으로 다시 시작합니다.</div></div><div class="theme-panel"><div class="theme-panel-title"><b>대시보드 배경 선택</b><div style="display:flex;align-items:center;gap:8px"><span class="desc">선택 즉시 아이디어 월에 적용됩니다.</span><button type="button" id="restoreThemes" class="theme-restore" disabled="">삭제 배경 복원</button></div></div><div class="theme-grid"><button type="button" class="theme-option active" data-theme="stadium"><span class="theme-preview preview-stadium"></span><span class="theme-delete" data-delete-theme="stadium" role="button" tabindex="0" aria-label="이 배경 삭제">×</span><span class="theme-name">1. 미래 기술 경기장</span></button><button type="button" class="theme-option" data-theme="diagnostic"><span class="theme-preview preview-diagnostic"></span><span class="theme-delete" data-delete-theme="diagnostic" role="button" tabindex="0" aria-label="이 배경 삭제">×</span><span class="theme-name">2. 스마트 진단센터</span></button><button type="button" class="theme-option" data-theme="medal"><span class="theme-preview preview-medal"></span><span class="theme-delete" data-delete-theme="medal" role="button" tabindex="0" aria-label="이 배경 삭제">×</span><span class="theme-name">3. 기술 메달·포디움</span></button><button type="button" class="theme-option" data-theme="toolboard"><span class="theme-preview preview-toolboard"></span><span class="theme-delete" data-delete-theme="toolboard" role="button" tabindex="0" aria-label="이 배경 삭제">×</span><span class="theme-name">4. 서비스 공구보드</span></button><button type="button" class="theme-option" data-theme="global"><span class="theme-preview preview-global"></span><span class="theme-delete" data-delete-theme="global" role="button" tabindex="0" aria-label="이 배경 삭제">×</span><span class="theme-name">5. 글로벌 네트워크</span></button></div></div><div id="notice" class="notice hide"></div><div class="tablewrap"><table><thead><tr><th>No.</th><th>활용 Tool</th><th>나의 AX Tool 사용경험</th><th>나는 이런 AX Tool을 원해요~~</th><th>글자 크기</th><th>참여자</th><th>등록 시각</th><th>관리</th></tr></thead><tbody id="rows"></tbody></table></div></div></section></main>
 <div id="dashAuthModal" class="modalbg hide" role="dialog" aria-modal="true" aria-labelledby="dashAuthTitle">
   <div class="modal">
@@ -775,59 +858,104 @@ document.addEventListener('keydown',e=>{
  }
 });
 updateFullscreenButton();
+/* [수정 의도] LGSC와 Qbot 분리 입력에 따른 다중/개별 카드 생성 및 Firebase 등록 로직 */
 $('ideaForm').onsubmit = async (e) => {
   e.preventDefault();
+
+  const lgscExp = ($('lgscExperience')?.value || '').trim();
+  const lgscWish = ($('lgscWish')?.value || '').trim();
+  const qbotExp = ($('qbotExperience')?.value || '').trim();
+  const qbotWish = ($('qbotWish')?.value || '').trim();
+  const empNo = ($('empNo')?.value || '').trim();
+  const name = ($('name')?.value || '').trim();
+  const fontKey = selectedNoteFont();
+
+  // LGSC와 Qbot 중 최소 하나는 입력되었는지 확인
+  const hasLgsc = Boolean(lgscExp || lgscWish);
+  const hasQbot = Boolean(qbotExp || qbotWish);
+
+  if (!hasLgsc && !hasQbot) {
+    $('formMsg').textContent = 'LGSC 또는 Qbot 중 최소 하나의 내용을 작성해 주세요.';
+    $('formMsg').style.background = '#fef2f2';
+    $('formMsg').style.color = '#b91c1c';
+    $('formMsg').style.border = '1px solid #fca5a5';
+    $('formMsg').classList.remove('hide');
+    setTimeout(() => {
+      $('formMsg').classList.add('hide');
+      $('formMsg').style.background = '';
+      $('formMsg').style.color = '';
+      $('formMsg').style.border = '';
+    }, 4000);
+    return;
+  }
+
   const submitBtn = e.target.querySelector('button.submit');
   if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = '서버 등록 중...'; }
 
-  const x = {
-    id: crypto.randomUUID?.() || String(Date.now()),
-    tool: $('toolName').value,
-    experience: $('experience').value.trim(),
-    wish: $('wish').value.trim(),
-    empNo: $('empNo').value.trim(),
-    name: $('name').value.trim(),
-    fontSize: Math.min(32, Math.max(16, Number($('fontSize').value) || 20)),
-    fontKey: selectedNoteFont(),
-    drawNo: `A-${String(Math.max(0, ...ideas.map(i => Number(String(i.drawNo || '').split('-').pop()) || 0)) + 1).padStart(3, '0')}`,
-    createdAt: Date.now()
-  };
-
   try {
-    if (isFirebaseConnected && db) {
-      // Firebase Firestore 서버에 실시간 저장
-      await db.collection('ideas').doc(x.id).set(x);
-    } else {
-      ideas.unshift(x);
-      save();
-      channel?.postMessage({type: 'add', item: x});
-      render();
+    const itemsToCreate = [];
+    let currentMaxDraw = Math.max(0, ...ideas.map(i => Number(String(i.drawNo || '').split('-').pop()) || 0));
+
+    // LGSC 작성 시 독립 카드 생성
+    if (hasLgsc) {
+      currentMaxDraw++;
+      itemsToCreate.push({
+        id: crypto.randomUUID?.() || String(Date.now()) + '-lgsc',
+        tool: 'LGSC',
+        experience: lgscExp,
+        wish: lgscWish,
+        empNo: empNo,
+        name: name,
+        fontSize: 20, // 가독성 최적 기본 글자 크기
+        fontKey: fontKey,
+        drawNo: `A-${String(currentMaxDraw).padStart(3, '0')}`,
+        createdAt: Date.now()
+      });
+    }
+
+    // Qbot 작성 시 독립 카드 생성
+    if (hasQbot) {
+      currentMaxDraw++;
+      itemsToCreate.push({
+        id: crypto.randomUUID?.() || String(Date.now()) + '-qbot',
+        tool: 'Qbot',
+        experience: qbotExp,
+        wish: qbotWish,
+        empNo: empNo,
+        name: name,
+        fontSize: 20,
+        fontKey: fontKey,
+        drawNo: `A-${String(currentMaxDraw).padStart(3, '0')}`,
+        createdAt: Date.now() + 1
+      });
+    }
+
+    // Firebase 또는 로컬 저장
+    for (const item of itemsToCreate) {
+      if (isFirebaseConnected && db) {
+        await db.collection('ideas').doc(item.id).set(item);
+      } else {
+        ideas.unshift(item);
+        save();
+        channel?.postMessage({type: 'add', item: item});
+        render();
+      }
     }
 
     e.target.reset();
-    $('fontSize').value = '20';
-    $('toolName').value = 'LGSC';
     $('fontKey').value = 'pen';
-    $('toolChoices').querySelectorAll('.tool-choice').forEach(b => {
-      const on = b.dataset.value === 'LGSC';
-      b.classList.toggle('on', on);
-      b.setAttribute('aria-checked', String(on));
-    });
-    $('fontChoices').querySelectorAll('.font-choice').forEach(b => {
+    $('fontChoices').querySelectorAll('.compact-font-btn').forEach(b => {
       const on = b.dataset.font === 'pen';
       b.classList.toggle('on', on);
       b.setAttribute('aria-checked', String(on));
     });
-    updateFontPreview();
-    /* [수정 의도] 사용자 요청에 따라 대시보드로의 자동 화면 전환을 제거하고,
-       참여 화면에 머무르며 '제출 완료하였습니다.' 완료 메시지만 표시하도록 변경 */
-    $('formMsg').textContent = '제출 완료하였습니다.';
+
+    $('formMsg').textContent = itemsToCreate.length > 1 ? '제출 완료하였습니다. (LGSC, Qbot 각각 등록)' : '제출 완료하였습니다.';
     $('formMsg').style.background = '#ecfdf5';
     $('formMsg').style.color = '#065f46';
     $('formMsg').style.border = '1px solid #a7f3d0';
     $('formMsg').classList.remove('hide');
 
-    // 4초 후 메시지를 자연스럽게 숨겨 다음 작성자가 쾌적하게 사용할 수 있도록 함
     setTimeout(() => {
       $('formMsg').classList.add('hide');
       $('formMsg').style.background = '';
@@ -837,16 +965,17 @@ $('ideaForm').onsubmit = async (e) => {
   } catch (err) {
     console.error('[Firebase] 아이디어 등록 오류:', err);
     $('formMsg').textContent = `등록 오류: ${err.message}`;
+    $('formMsg').style.background = '#fef2f2';
+    $('formMsg').style.color = '#b91c1c';
+    $('formMsg').style.border = '1px solid #fca5a5';
     $('formMsg').classList.remove('hide');
   } finally {
     if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = '아이디어 제출하기'; }
   }
 };
 
-/* [수정 의도] Firestore 실시간 구독 (onSnapshot) 연결: 서버에 새 아이디어가 등록되면 대시보드 자동 갱신 */
+/* [수정 의도] Firestore 실시간 구독 (onSnapshot) 연결 */
 if (isFirebaseConnected && db) {
-  /* [수정 의도] Firestore 인덱스 에러 방지를 위해 전체 컬렉션 구독 후 자바스크립트에서 createdAt 정렬 수행.
-     보안 규칙(Rules) 미설정 시 상단에 즉각적인 알림 제공 */
   db.collection('ideas').onSnapshot((snapshot) => {
     const serverIdeas = [];
     snapshot.forEach((doc) => {
@@ -863,8 +992,20 @@ if (isFirebaseConnected && db) {
   });
 }
 
-  function updateFontPreview(){const size=Math.min(32,Math.max(16,Number($('fontSize').value)||20));$('fontSizeValue').textContent=size+'px';$('fontPreview').style.fontSize=size+'px';$('fontPreview').style.fontFamily=noteFont(selectedNoteFont());$('fontPreview').textContent=selectedNoteFont()==='gaegu'?'개구체 미리보기입니다.':selectedNoteFont()==='melody'?'하이멜로디체 미리보기입니다.':'나눔 펜글씨 미리보기입니다.'}function setChoice(group,button,valueId,dataName){group.querySelectorAll('.choice-btn').forEach(b=>{const on=b===button;b.classList.toggle('on',on);b.setAttribute('aria-checked',String(on))});$(valueId).value=button.dataset[dataName];updateFontPreview()}$('toolChoices').addEventListener('click',e=>{const b=e.target.closest('.tool-choice');if(b)setChoice($('toolChoices'),b,'toolName','value')});$('fontChoices').addEventListener('click',e=>{const b=e.target.closest('.font-choice');if(b)setChoice($('fontChoices'),b,'fontKey','font')});
-  $('fontSize').addEventListener('input',updateFontPreview);updateFontPreview();
+// [수정 의도] 글자 크기 슬라이더 제거에 따른 더미 함수 유지 (호출 오류 방지)
+function updateFontPreview() {}
+// [수정 의도] 컴팩트 폰트 선택 이벤트 연결
+$('fontChoices').addEventListener('click', e => {
+  const b = e.target.closest('.compact-font-btn');
+  if (b) {
+    $('fontChoices').querySelectorAll('.compact-font-btn').forEach(btn => {
+      const on = btn === b;
+      btn.classList.toggle('on', on);
+      btn.setAttribute('aria-checked', String(on));
+    });
+    $('fontKey').value = b.dataset.font;
+  }
+});
   $('formTab').onclick=()=>show('form');/* [수정 의도] 사용자가 대시보드 탭을 선택할 때 비밀번호(18)를 확인하는 인증 모달 로직 연결 */
   /* [수정 의도] 대시보드 탭 및 전체 화면 진입 시 비번(18) 확인을 위한 공통 인증 모달 로직 */
   const AUTH_PASSWORD = '18';
