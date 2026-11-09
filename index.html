@@ -664,8 +664,30 @@ body.fullscreen-wall-only #wall .note[data-tool-key="qbot"] .pin {
   top: 10px !important;
   right: 10px !important;
 }
+
+/* [수정 의도] 글자 없이 깔끔한 신호등 인디케이터 스타일 */
+.status-dot {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+  margin-right: 6px;
+  vertical-align: middle;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.status-dot.offline {
+  background: #ef4444;
+  box-shadow: 0 0 8px #ef4444;
+}
+.status-dot.warning {
+  background: #f59e0b;
+  box-shadow: 0 0 8px #f59e0b;
+}
 </style></head><body class="theme-stadium">
-<header><div class="head"><button id="brand" class="brand"><span class="logo">💡</span><span><span class="title">AX Tool 활용 아이디어</span><span class="sub">업무 개선 아이디어 공유 보드 <b id="hint"></b></span></span></button><div class="actions"><span class="status">● 이 브라우저에 저장</span><button id="formTab" class="btn on">참여 화면</button><button id="dashTab" class="btn">대시보드</button><button id="fullscreenBtn" type="button" class="btn fullscreen-btn" title="전체 화면 전환" aria-label="전체 화면 전환" aria-pressed="false"><span id="fullscreenIcon" class="fullscreen-icon">⛶</span><span id="fullscreenLabel" class="fullscreen-label">전체 화면</span></button></div></div></header><div id="techOlympicsVisual" class="tech-olympics-visual" aria-hidden="true"><div id="olympicsBgA" class="olympics-bg active" style="background-image: url(&quot;https://live.lge.co.kr/wp-content/uploads/2024/11/2411-lg-service-3.jpg&quot;);"></div><div id="olympicsBgB" class="olympics-bg"></div><div class="olympics-shade"></div></div><div id="focusBackdrop" class="focus-backdrop" aria-hidden="true"></div>
+<header><div class="head"><button id="brand" class="brand"><span class="logo">💡</span><span><span class="title">AX Tool 활용 아이디어</span><span class="sub">업무 개선 아이디어 공유 보드 <b id="hint"></b></span></span></button><div class="actions"><span class="status-dot" id="serverStatusDot" title="Firebase 실시간 서버 연결됨" aria-label="서버 상태"></span><button id="formTab" class="btn on">참여 화면</button><button id="dashTab" class="btn">대시보드</button><button id="fullscreenBtn" type="button" class="btn fullscreen-btn" title="전체 화면 전환" aria-label="전체 화면 전환" aria-pressed="false"><span id="fullscreenIcon" class="fullscreen-icon">⛶</span><span id="fullscreenLabel" class="fullscreen-label">전체 화면</span></button></div></div></header><div id="techOlympicsVisual" class="tech-olympics-visual" aria-hidden="true"><div id="olympicsBgA" class="olympics-bg active" style="background-image: url(&quot;https://live.lge.co.kr/wp-content/uploads/2024/11/2411-lg-service-3.jpg&quot;);"></div><div id="olympicsBgB" class="olympics-bg"></div><div class="olympics-shade"></div></div><div id="focusBackdrop" class="focus-backdrop" aria-hidden="true"></div>
 <main><section id="formView" class=""><form id="ideaForm" class="form"><h2>AX Tool 활용 경험과 아이디어를 남겨주세요</h2><div class="desc">LGSC 또는 Qbot 사용시 경험과 원하는 기능을 자유롭게 작성해 주세요.</div>
 
   <!-- [수정 의도] 메모 글씨체를 폼 최상단에 작고 깔끔하게 배치 (글자크기는 최적 크기 20px로 자동 고정) -->
@@ -749,14 +771,19 @@ let db = null;
 let isFirebaseConnected = false;
 
 function updateServerStatus(connected, msg) {
-  const statusEl = document.querySelector('.status');
-  if (!statusEl) return;
+  const dot = $('serverStatusDot') || document.querySelector('.status-dot') || document.querySelector('.status');
+  if (!dot) return;
+  dot.textContent = ''; // [수정 의도] 사용자 요청에 따라 글자를 빼고 신호등 불빛만 표기
   if (connected) {
-    statusEl.textContent = '● Firebase 실시간 서버 연결됨';
-    statusEl.style.color = '#16a34a';
+    dot.className = 'status-dot';
+    dot.style.background = '#22c55e';
+    dot.style.boxShadow = '0 0 8px #22c55e';
+    dot.title = msg || 'Firebase 실시간 서버 연결됨';
   } else {
-    statusEl.textContent = msg || '● 로컬 저장 모드 (Firebase 키 설정 대기)';
-    statusEl.style.color = '#ca8a04';
+    dot.className = 'status-dot offline';
+    dot.style.background = '#ef4444';
+    dot.style.boxShadow = '0 0 8px #ef4444';
+    dot.title = msg || 'Firebase 연결 끊김';
   }
 }
 
