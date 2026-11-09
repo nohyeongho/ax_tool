@@ -3,7 +3,7 @@
 <html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AX Tool 활용 아이디어</title>
 <style>
 /* Photo-inspired paper notes. Keep application logic and stored records unchanged. */
-@import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Hi+Melody&family=Nanum+Pen+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Hi+Melody&family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
 
 /* Mixed-language typography
    Korean: LG Smart Regular
@@ -487,6 +487,140 @@ body.fullscreen-wall-only .idea-focus-clone .ntop span:last-child{font-size:10px
 }
 .tool-badge.lgsc { background: #fff1f2; color: var(--lg); border: 1px solid #fecdd3; }
 .tool-badge.qbot { background: #f0f9ff; color: #0284c7; border: 1px solid #bae6fd; }
+
+/* [수정 의도] Noto Sans KR 폰트 전면 적용 및 모바일 반응형 / 포스트잇 색상 차별화 */
+body { font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important; }
+
+/* 1. LGSC vs Qbot 대시보드 및 전체화면 포스트잇 색상 극명한 차별화 */
+.board .note[data-tool-key="lgsc"],
+body.fullscreen-wall-only #wall .note[data-tool-key="lgsc"],
+.idea-focus-clone[data-tool-key="lgsc"] {
+  --tool-paper-top: #fef08a !important;
+  --tool-paper-bottom: #fef9c3 !important;
+  --tool-ink: #713f12 !important;
+  --paper-top: #fef08a !important;
+  --paper-bottom: #fef9c3 !important;
+}
+.board .note[data-tool-key="lgsc"] .paper-surface,
+body.fullscreen-wall-only #wall .note[data-tool-key="lgsc"] .paper-surface,
+.idea-focus-clone[data-tool-key="lgsc"] .paper-surface {
+  background: linear-gradient(180deg, #fef08a, #fef9c3) !important;
+  box-shadow: 0 4px 14px rgba(202, 138, 4, 0.2) !important;
+}
+.board .note[data-tool-key="lgsc"] .pin,
+body.fullscreen-wall-only #wall .note[data-tool-key="lgsc"] .pin {
+  background: radial-gradient(circle at 35% 35%, #f59e0b, #b45309) !important;
+}
+
+.board .note[data-tool-key="qbot"],
+body.fullscreen-wall-only #wall .note[data-tool-key="qbot"],
+.idea-focus-clone[data-tool-key="qbot"] {
+  --tool-paper-top: #bae6fd !important;
+  --tool-paper-bottom: #e0f2fe !important;
+  --tool-ink: #0369a1 !important;
+  --paper-top: #bae6fd !important;
+  --paper-bottom: #e0f2fe !important;
+}
+.board .note[data-tool-key="qbot"] .paper-surface,
+body.fullscreen-wall-only #wall .note[data-tool-key="qbot"] .paper-surface,
+.idea-focus-clone[data-tool-key="qbot"] .paper-surface {
+  background: linear-gradient(180deg, #bae6fd, #e0f2fe) !important;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.2) !important;
+}
+.board .note[data-tool-key="qbot"] .pin,
+body.fullscreen-wall-only #wall .note[data-tool-key="qbot"] .pin {
+  background: radial-gradient(circle at 35% 35%, #38bdf8, #0284c7) !important;
+}
+
+/* 2. 사번 및 이름 입력란 컴팩트화 */
+.compact-auth-row {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 10px !important;
+  margin-top: 6px !important;
+  margin-bottom: 16px !important;
+}
+.compact-auth-row .field {
+  margin-bottom: 0 !important;
+}
+.compact-auth-row label {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  color: #64748b !important;
+  margin-bottom: 3px !important;
+  display: block;
+}
+.compact-auth-row input {
+  width: 100% !important;
+  padding: 7px 11px !important;
+  font-size: 13px !important;
+  border-radius: 8px !important;
+  height: 38px !important;
+  box-sizing: border-box !important;
+}
+
+/* 3. 모바일 반응형 연동 스타일 */
+@media (max-width: 680px) {
+  body { font-size: 14px; }
+  header .head {
+    padding: 6px 10px !important;
+    gap: 6px !important;
+  }
+  header .brand .title {
+    font-size: 15px !important;
+  }
+  header .brand .sub {
+    display: none !important;
+  }
+  header .actions button {
+    padding: 5px 9px !important;
+    font-size: 12px !important;
+  }
+  #formView {
+    padding: 8px !important;
+  }
+  .form {
+    padding: 16px 14px !important;
+    margin: 4px auto !important;
+    border-radius: 12px !important;
+  }
+  .form h2 {
+    font-size: 18px !important;
+    line-height: 1.35 !important;
+  }
+  .form .desc {
+    font-size: 12px !important;
+    margin-bottom: 14px !important;
+  }
+  .tool-section {
+    padding: 12px 10px 6px !important;
+    margin-bottom: 14px !important;
+  }
+  .tool-section label {
+    font-size: 12px !important;
+  }
+  .tool-section textarea {
+    min-height: 72px !important;
+    font-size: 15px !important;
+    padding: 8px 10px !important;
+  }
+  .compact-font-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 6px !important;
+  }
+  .compact-font-btn {
+    padding: 5px 6px !important;
+    font-size: 12px !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+  button.submit {
+    height: 48px !important;
+    font-size: 15px !important;
+    border-radius: 10px !important;
+  }
+}
 </style></head><body class="theme-stadium">
 <header><div class="head"><button id="brand" class="brand"><span class="logo">💡</span><span><span class="title">AX Tool 활용 아이디어</span><span class="sub">업무 개선 아이디어 공유 보드 <b id="hint"></b></span></span></button><div class="actions"><span class="status">● 이 브라우저에 저장</span><button id="formTab" class="btn on">참여 화면</button><button id="dashTab" class="btn">대시보드</button><button id="fullscreenBtn" type="button" class="btn fullscreen-btn" title="전체 화면 전환" aria-label="전체 화면 전환" aria-pressed="false"><span id="fullscreenIcon" class="fullscreen-icon">⛶</span><span id="fullscreenLabel" class="fullscreen-label">전체 화면</span></button></div></div></header><div id="techOlympicsVisual" class="tech-olympics-visual" aria-hidden="true"><div id="olympicsBgA" class="olympics-bg active" style="background-image: url(&quot;https://live.lge.co.kr/wp-content/uploads/2024/11/2411-lg-service-3.jpg&quot;);"></div><div id="olympicsBgB" class="olympics-bg"></div><div class="olympics-shade"></div></div><div id="focusBackdrop" class="focus-backdrop" aria-hidden="true"></div>
 <main><section id="formView" class=""><form id="ideaForm" class="form"><h2>AX Tool 활용 경험과 아이디어를 남겨주세요</h2><div class="desc">LGSC 또는 Qbot 사용시 경험과 원하는 기능을 자유롭게 작성해 주세요.</div>
@@ -499,6 +633,7 @@ body.fullscreen-wall-only .idea-focus-clone .ntop span:last-child{font-size:10px
       <button type="button" class="compact-font-btn on" data-font="pen" role="radio" aria-checked="true">나눔 펜글씨</button>
       <button type="button" class="compact-font-btn" data-font="gaegu" role="radio" aria-checked="false">개구체</button>
       <button type="button" class="compact-font-btn" data-font="melody" role="radio" aria-checked="false">하이멜로디체</button>
+      <button type="button" class="compact-font-btn" data-font="noto" role="radio" aria-checked="false">Noto Sans</button>
     </div>
   </div>
 
@@ -528,7 +663,7 @@ body.fullscreen-wall-only .idea-focus-clone .ntop span:last-child{font-size:10px
     </div>
   </div>
 
-  <div class="twocol"><div class="field"><label for="empNo">사번</label><input id="empNo" required="" placeholder="사번 입력"></div><div class="field"><label for="name">이름</label><input id="name" required="" placeholder="이름 입력"></div></div><button class="submit">아이디어 제출하기</button><div id="formMsg" class="msg hide"></div></form></section>
+  <div class="compact-auth-row"><div class="field"><label for="empNo">사번</label><input id="empNo" required="" placeholder="사번 입력"></div><div class="field"><label for="name">이름</label><input id="name" required="" placeholder="이름 입력"></div></div><button class="submit">아이디어 제출하기</button><div id="formMsg" class="msg hide"></div></form></section>
   <section id="dashView" class="hide"><div class="stats"><div class="stat"><div id="total" class="num">0</div><div class="lab">전체 참여</div></div><div class="stat"><div id="lgscCount" class="num">0</div><div class="lab">LGSC</div></div><div class="stat"><div id="qbotCount" class="num">0</div><div class="lab">Qbot</div></div><div class="stat"><div id="todayCount" class="num">0</div><div class="lab">오늘 참여</div></div></div><div class="boardhead"><div><h2 id="dashTitle">실시간 아이디어 월</h2><div id="dashDesc" class="desc">새로운 아이디어가 가장 앞에 표시됩니다. 카드를 선택하면 확대됩니다.</div><div class="tool-color-legend" aria-label="활용 Tool별 메모 색상"><span class="tool-color-chip lgsc"><i></i>LGSC</span><span class="tool-color-chip qbot"><i></i>Qbot</span></div></div><div class="focus-toolbar"><button id="clearFocus" type="button" class="focus-clear hide">선택 해제</button></div></div><div id="wall" class="board" data-fit-scale="1.0000" style=""><div class="empty-board"><b>AX Tool 활용 경험과 아이디어를 모아보세요</b><p>참여 화면에서 첫 의견을 등록해 주세요.</p></div></div><div id="admin" class="listcard hide"><div class="listhead"><div><b>아이디어 통합 목록 · 관리자 모드</b><div class="desc">이름과 사번 원본이 표시됩니다. 이 관리 화면은 인증 기능이 없으므로 공개 배포 시 별도 접근 제어가 필요합니다.</div></div><div class="admin-actions"><button id="pptBtn" class="btn">PPT 출력</button><button id="mailBtn" class="btn primary">PPT 자동 발송</button><button id="closeAdmin" class="btn">닫기</button></div></div><div class="rolling-admin-panel"><div class="rolling-admin-head"><b>대시보드 배경 롤링 설정</b><div class="rolling-admin-actions"><button id="rollingApply" type="button" class="rolling-admin-btn primary">설정 적용</button><button id="rollingNextAdmin" type="button" class="rolling-admin-btn">다음 배경</button></div></div><div class="rolling-admin-grid"><div class="rolling-setting"><label for="rollingEnabledAdmin">자동 롤링</label><div class="rolling-switch"><input id="rollingEnabledAdmin" type="checkbox"><span>배경 자동 전환 사용</span></div></div><div class="rolling-setting"><label for="rollingIntervalAdmin">전환 간격 직접 입력</label><div style="display:flex;align-items:center;gap:7px"><input id="rollingIntervalAdmin" type="number" min="3" max="600" step="1" inputmode="numeric" value="8"><b>초</b></div></div><div class="rolling-setting"><label>현재 상태</label><div id="rollingStatusAdmin" class="rolling-status-admin" style="color: rgb(100, 116, 139);">자동 롤링 정지</div></div></div><div class="rolling-help">3초부터 600초까지 설정할 수 있습니다. 설정 적용 시 입력한 시간부터 새 간격으로 다시 시작합니다.</div></div><div class="theme-panel"><div class="theme-panel-title"><b>대시보드 배경 선택</b><div style="display:flex;align-items:center;gap:8px"><span class="desc">선택 즉시 아이디어 월에 적용됩니다.</span><button type="button" id="restoreThemes" class="theme-restore" disabled="">삭제 배경 복원</button></div></div><div class="theme-grid"><button type="button" class="theme-option active" data-theme="stadium"><span class="theme-preview preview-stadium"></span><span class="theme-delete" data-delete-theme="stadium" role="button" tabindex="0" aria-label="이 배경 삭제">×</span><span class="theme-name">1. 미래 기술 경기장</span></button><button type="button" class="theme-option" data-theme="diagnostic"><span class="theme-preview preview-diagnostic"></span><span class="theme-delete" data-delete-theme="diagnostic" role="button" tabindex="0" aria-label="이 배경 삭제">×</span><span class="theme-name">2. 스마트 진단센터</span></button><button type="button" class="theme-option" data-theme="medal"><span class="theme-preview preview-medal"></span><span class="theme-delete" data-delete-theme="medal" role="button" tabindex="0" aria-label="이 배경 삭제">×</span><span class="theme-name">3. 기술 메달·포디움</span></button><button type="button" class="theme-option" data-theme="toolboard"><span class="theme-preview preview-toolboard"></span><span class="theme-delete" data-delete-theme="toolboard" role="button" tabindex="0" aria-label="이 배경 삭제">×</span><span class="theme-name">4. 서비스 공구보드</span></button><button type="button" class="theme-option" data-theme="global"><span class="theme-preview preview-global"></span><span class="theme-delete" data-delete-theme="global" role="button" tabindex="0" aria-label="이 배경 삭제">×</span><span class="theme-name">5. 글로벌 네트워크</span></button></div></div><div id="notice" class="notice hide"></div><div class="tablewrap"><table><thead><tr><th>No.</th><th>활용 Tool</th><th>나의 AX Tool 사용경험</th><th>나는 이런 AX Tool을 원해요~~</th><th>글자 크기</th><th>참여자</th><th>등록 시각</th><th>관리</th></tr></thead><tbody id="rows"></tbody></table></div></div></section></main>
 <div id="dashAuthModal" class="modalbg hide" role="dialog" aria-modal="true" aria-labelledby="dashAuthTitle">
   <div class="modal">
@@ -687,7 +822,7 @@ document.querySelector('.theme-grid').addEventListener('click',e=>{
 document.querySelector('.theme-grid').addEventListener('keydown',e=>{const del=e.target.closest('[data-delete-theme]');if(del&&(e.key==='Enter'||e.key===' ')){e.preventDefault();deleteTheme(del.dataset.deleteTheme,true)}});
 $('restoreThemes').addEventListener('click',()=>restoreThemes(true));
 function formatDate(value,timeOnly=false){const d=new Date(Number(value)||value);if(Number.isNaN(d.getTime()))return '-';return timeOnly?d.toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'}):d.toLocaleString('ko-KR')}function maskName(v=''){let c=[...v];return c.length<2?'*':c.length===2?c[0]+'*':c[0]+'*'.repeat(c.length-2)+c.at(-1)}function maskNo(v=''){v=String(v);return v.slice(0,2)+'*'.repeat(Math.max(4,v.length-2))}function save(){localStorage.setItem(KEY,JSON.stringify(ideas));localStorage.setItem(DELETED_KEY,JSON.stringify([...deletedIds]))}function show(v){if(v!=='dash'&&focusedIdeaId){focusedIdeaId=null;$('wall').classList.remove('has-focus');$('focusBackdrop').classList.remove('show');$('clearFocus').classList.add('hide')}view=v;$('formView').classList.toggle('hide',v!=='form');$('dashView').classList.toggle('hide',v!=='dash');$('formTab').classList.toggle('on',v==='form');$('dashTab').classList.toggle('on',v==='dash');render()}
-const NOTE_FONTS={pen:"'Nanum Pen Script','나눔손글씨 펜',cursive",gaegu:"'Gaegu',cursive",melody:"'Hi Melody',cursive"};function noteFont(key='pen'){return NOTE_FONTS[key]||NOTE_FONTS.pen}function selectedNoteFont(){return $('fontKey')?.value||'pen'}
+const NOTE_FONTS={pen:"'Nanum Pen Script','나눔손글씨 펜',cursive",gaegu:"'Gaegu',cursive",melody:"'Hi Melody',cursive",noto:"'Noto Sans KR',sans-serif"};function noteFont(key='pen'){return NOTE_FONTS[key]||NOTE_FONTS.pen}function selectedNoteFont(){return $('fontKey')?.value||'pen'}
   function fitNoteTypography(root=document){requestAnimationFrame(()=>{root.querySelectorAll?.('.note:not(.idea-focus-clone)').forEach(note=>{note.classList.remove('note-compact','note-tight','note-micro');note.style.height='auto'})})}
 function toolKey(name){return String(name||'').toLowerCase().includes('qbot')?'qbot':'lgsc'}
 function render(){ideas.sort((a,b)=>b.createdAt-a.createdAt);$('total').textContent=ideas.length;$('lgscCount').textContent=ideas.filter(x=>toolKey(x.tool)==='lgsc').length;$('qbotCount').textContent=ideas.filter(x=>toolKey(x.tool)==='qbot').length;const today=new Date();today.setHours(0,0,0,0);$('todayCount').textContent=ideas.filter(x=>Number(x.createdAt)>=today.getTime()).length;$('wall').innerHTML=ideas.length?ideas.map(x=>`<article style="--note-font:${esc(noteFont(x.fontKey))};--idea-font-size:${esc(x.fontSize||20)}px" data-font-key="${esc(x.fontKey||'pen')}" data-tool-key="${esc(toolKey(x.tool))}" class="note stage-before ${String(x.id)===String(focusedIdeaId)?'note-focused':''}" data-note-id="${esc(x.id)}" tabindex="0" role="button" aria-label="${esc(x.drawNo)} ${esc(x.tool||'LGSC')} 아이디어 선택"><button type="button" class="note-delete-btn" data-delete-id="${esc(x.id)}" title="메모 삭제" aria-label="메모 삭제">✕</button><i class="pin"></i><span class="paper-surface" aria-hidden="true"></span><span class="paper-detail" aria-hidden="true"></span><div class="ntop"><span class="note-title">${esc(x.tool||'LGSC')}</span><span>${esc(x.drawNo)}</span></div><div class="part"><b>나의 AX Tool 사용경험</b><p>${esc(x.experience)}</p></div><div class="part"><b>나는 이런 AX Tool을 원해요~~</b><p>${esc(x.wish)}</p></div><div class="nfoot"><span>${esc(maskName(x.name))} · ${esc(maskNo(x.empNo))}</span><span>${formatDate(x.createdAt,true)}</span></div></article>`).join(''):'<div class="empty-board"><b>AX Tool 활용 경험과 아이디어를 모아보세요</b><p>참여 화면에서 첫 의견을 등록해 주세요.</p></div>';$('rows').innerHTML=ideas.map((x,i)=>`<tr data-row-index="${i}"><td>${ideas.length-i}</td><td><b>${esc(x.tool||'LGSC')}</b></td><td>${esc(x.experience)}</td><td>${esc(x.wish)}</td><td>${esc(x.fontSize||20)}px</td><td><b>${esc(x.name)}</b><br>${esc(x.empNo)}</td><td>${formatDate(x.createdAt,false)}</td><td><button type="button" class="delete-btn" data-delete-id="${esc(x.id)}" data-delete-index="${i}">삭제</button></td></tr>`).join('')}
@@ -994,7 +1129,15 @@ if (isFirebaseConnected && db) {
 
 // [수정 의도] 글자 크기 슬라이더 제거에 따른 더미 함수 유지 (호출 오류 방지)
 function updateFontPreview() {}
-// [수정 의도] 컴팩트 폰트 선택 이벤트 연결
+// [수정 의도] 글씨체 선택 시 4개 입력란(textarea) 실시간 폰트 변경 연동
+function applyTextareaFont(fontKey) {
+  const font = noteFont(fontKey);
+  ['lgscExperience', 'lgscWish', 'qbotExperience', 'qbotWish'].forEach(id => {
+    const el = $(id);
+    if (el) el.style.fontFamily = font;
+  });
+}
+
 $('fontChoices').addEventListener('click', e => {
   const b = e.target.closest('.compact-font-btn');
   if (b) {
@@ -1004,8 +1147,11 @@ $('fontChoices').addEventListener('click', e => {
       btn.setAttribute('aria-checked', String(on));
     });
     $('fontKey').value = b.dataset.font;
+    applyTextareaFont(b.dataset.font);
   }
 });
+// 초기 기본 폰트 적용
+applyTextareaFont('pen');
   $('formTab').onclick=()=>show('form');/* [수정 의도] 사용자가 대시보드 탭을 선택할 때 비밀번호(18)를 확인하는 인증 모달 로직 연결 */
   /* [수정 의도] 대시보드 탭 및 전체 화면 진입 시 비번(18) 확인을 위한 공통 인증 모달 로직 */
   const AUTH_PASSWORD = '18';
