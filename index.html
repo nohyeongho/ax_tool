@@ -312,14 +312,14 @@ body.fullscreen-wall-only .idea-focus-clone{font-size:inherit!important}
 .idea-focus-clone .pin{display:none!important;visibility:hidden!important;opacity:0!important}
 
 
-/* [수정 의도] 사용자 요청: 전체 화면 글씨체 한 단계 확대(20px->25px) 및 카드 하단 여백 제거, 세로 간격 균형 배치 */
+/* [수정 의도] 사용자 요청: 전체 화면 글씨체를 한 단계 확대(20px->26px)하고, 카드 아래쪽 거대한 빈 공간을 완전히 없애며 상하 간격을 안정적으로 배치함 */
 .board .note,
 .idea-focus-clone {
   display: flex !important;
   flex-direction: column !important;
   height: auto !important;
-  min-height: 330px !important;
-  padding: 26px 22px 22px !important;
+  min-height: auto !important;
+  padding: 26px 22px 20px !important;
   box-sizing: border-box !important;
   overflow: visible !important;
   align-self: start !important;
@@ -329,7 +329,7 @@ body.fullscreen-wall-only .idea-focus-clone{font-size:inherit!important}
   display: flex !important;
   justify-content: space-between !important;
   align-items: flex-start !important;
-  font-size: 25px !important;
+  font-size: 26px !important;
   line-height: 1.1 !important;
   padding-bottom: 8px !important;
   gap: 8px !important;
@@ -342,44 +342,51 @@ body.fullscreen-wall-only .idea-focus-clone{font-size:inherit!important}
   white-space: normal;
   overflow-wrap: anywhere;
   word-break: keep-all;
-  font-size: 25px !important;
+  font-size: 26px !important;
   line-height: 1.12 !important;
   font-weight: 400;
 }
 .board .note .ntop span:last-child,
 .idea-focus-clone .ntop span:last-child {
-  font-size: 19px !important;
+  font-size: 20px !important;
   line-height: 1.1 !important;
   white-space: nowrap !important;
 }
 .board .note .part,
 .idea-focus-clone .part {
-  margin-top: 18px !important;
+  margin-top: 14px !important;
 }
 .board .note .part b,
 .idea-focus-clone .part b {
   display: block;
   font-size: 18px !important;
   line-height: 1.15 !important;
-  margin: 0 0 6px !important;
+  margin: 0 0 5px !important;
+  opacity: 0.85 !important;
 }
 .board .note .part p,
 .idea-focus-clone .part p {
-  font-size: var(--idea-font-size, 25px) !important;
+  font-size: 26px !important;
   line-height: 1.25 !important;
-  letter-spacing: -.025em !important;
+  letter-spacing: -.02em !important;
   margin: 0 !important;
   word-break: keep-all !important;
   overflow-wrap: anywhere !important;
 }
+.board .note[data-font-key="noto"] .part p,
+.idea-focus-clone[data-font-key="noto"] .part p {
+  font-size: 20px !important;
+  line-height: 1.4 !important;
+}
 .board .note .nfoot,
 .idea-focus-clone .nfoot {
   position: static !important;
-  margin-top: auto !important;
-  font-size: 18px !important;
+  margin-top: 16px !important;
+  margin-bottom: 0 !important;
+  font-size: 19px !important;
   line-height: 1.15 !important;
   min-height: 24px !important;
-  padding-top: 14px !important;
+  padding-top: 12px !important;
   display: flex !important;
   justify-content: space-between !important;
   gap: 10px !important;
@@ -387,24 +394,28 @@ body.fullscreen-wall-only .idea-focus-clone{font-size:inherit!important}
 }
 .board .note .paper-surface,
 .idea-focus-clone .paper-surface {
+  position: absolute !important;
+  inset: 0 !important;
   height: 100% !important;
-  bottom: auto !important;
+  bottom: 0 !important;
 }
 .board .note .paper-detail,
 .idea-focus-clone .paper-detail {
+  position: absolute !important;
+  inset: 0 !important;
   height: 100% !important;
-  bottom: auto !important;
+  bottom: 0 !important;
 }
 @media (max-width: 700px) {
   .board .note,
   .idea-focus-clone {
     height: auto !important;
-    min-height: 300px !important;
-    padding: 24px 18px 20px !important;
+    min-height: auto !important;
+    padding: 24px 18px 18px !important;
   }
   .board .note .part p,
   .idea-focus-clone .part p {
-    font-size: 22px !important;
+    font-size: 23px !important;
   }
 }
 
@@ -462,8 +473,9 @@ body.fullscreen-wall-only .idea-focus-clone .ntop span:last-child{font-size:10px
   .font-preview{margin-top:10px;padding:14px 16px;border:1px solid #ead9c0;border-radius:12px;background:#fffaf0;font-family:'Nanum Pen Script',cursive;line-height:1.2;color:#57331f}
   /* [수정 의도] 각 메모 카드가 저장된 개별 fontKey(나눔펜, 개구, 하이멜로디, Noto Sans)를 따르도록 CSS 변수 연결 */
   .board .note,.idea-focus-clone,.board .note .ntop,.board .note .part,.board .note .part b,.board .note .part p,.board .note .nfoot{font-family:var(--note-font,'Nanum Pen Script',cursive)!important}
-  .board .note .part p{font-size:var(--idea-font-size,25px)!important}
-  .idea-focus-clone .part p{font-size:var(--idea-font-size,25px)!important}
+  .board .note .part p{font-size:26px!important}
+  .idea-focus-clone .part p{font-size:26px!important}
+  .board .note[data-font-key="noto"] .part p,.idea-focus-clone[data-font-key="noto"] .part p{font-size:20px!important}
   .tool-color-chip.qbot i{background:#a9d5eb}
   .board .note[data-tool-key="qbot"]{--tool-paper-top:#a9d5eb;--tool-paper-bottom:#d3edf5;--tool-ink:#254657;--tool-title:#214e65;--tool-muted:#527183;--tool-line:#315e7440}
   .idea-focus-clone[data-tool-key="qbot"]{--tool-paper-top:#a9d5eb;--tool-paper-bottom:#d3edf5;--tool-ink:#254657;--tool-title:#214e65;--tool-muted:#527183;--tool-line:#315e7440}
@@ -996,7 +1008,7 @@ function formatDate(value,timeOnly=false){const d=new Date(Number(value)||value)
 const NOTE_FONTS={pen:"'Nanum Pen Script','나눔손글씨 펜',cursive",gaegu:"'Gaegu',cursive",melody:"'Hi Melody',cursive",noto:"'Noto Sans KR',sans-serif"};function noteFont(key='pen'){return NOTE_FONTS[key]||NOTE_FONTS.pen}function selectedNoteFont(){return $('fontKey')?.value||'pen'}
   function fitNoteTypography(root=document){requestAnimationFrame(()=>{root.querySelectorAll?.('.note:not(.idea-focus-clone)').forEach(note=>{note.classList.remove('note-compact','note-tight','note-micro');note.style.height='auto'})})}
 function toolKey(name){return String(name||'').toLowerCase().includes('qbot')?'qbot':'lgsc'}
-function render(){ideas.sort((a,b)=>b.createdAt-a.createdAt);$('total').textContent=ideas.length;$('lgscCount').textContent=ideas.filter(x=>toolKey(x.tool)==='lgsc').length;$('qbotCount').textContent=ideas.filter(x=>toolKey(x.tool)==='qbot').length;const today=new Date();today.setHours(0,0,0,0);$('todayCount').textContent=ideas.filter(x=>Number(x.createdAt)>=today.getTime()).length;$('wall').innerHTML=ideas.length?ideas.map(x=>`<article style="--note-font:${esc(noteFont(x.fontKey))};--idea-font-size:${esc(x.fontSize||20)}px" data-font-key="${esc(x.fontKey||'pen')}" data-tool-key="${esc(toolKey(x.tool))}" class="note stage-before ${String(x.id)===String(focusedIdeaId)?'note-focused':''}" data-note-id="${esc(x.id)}" tabindex="0" role="button" aria-label="${esc(x.drawNo)} ${esc(x.tool||'LGSC')} 아이디어 선택"><button type="button" class="note-delete-btn" data-delete-id="${esc(x.id)}" title="메모 삭제" aria-label="메모 삭제">✕</button><i class="pin"></i><span class="paper-surface" aria-hidden="true"></span><span class="paper-detail" aria-hidden="true"></span><div class="ntop"><span class="note-title">${esc(x.tool||'LGSC')}</span><span>${esc(x.drawNo)}</span></div><div class="part"><b>나의 AX Tool 사용경험</b><p>${esc(x.experience)}</p></div><div class="part"><b>나는 이런 AX Tool을 원해요~~</b><p>${esc(x.wish)}</p></div><div class="nfoot"><span>${esc(maskName(x.name))} · ${esc(maskNo(x.empNo))}</span><span>${formatDate(x.createdAt,true)}</span></div></article>`).join(''):'<div class="empty-board"><b>AX Tool 활용 경험과 아이디어를 모아보세요</b><p>참여 화면에서 첫 의견을 등록해 주세요.</p></div>';$('rows').innerHTML=ideas.map((x,i)=>`<tr data-row-index="${i}"><td>${ideas.length-i}</td><td><b>${esc(x.tool||'LGSC')}</b></td><td>${esc(x.experience)}</td><td>${esc(x.wish)}</td><td>${esc(x.fontSize||20)}px</td><td><b>${esc(x.name)}</b><br>${esc(x.empNo)}</td><td>${formatDate(x.createdAt,false)}</td><td><button type="button" class="delete-btn" data-delete-id="${esc(x.id)}" data-delete-index="${i}">삭제</button></td></tr>`).join('')}
+function render(){ideas.sort((a,b)=>b.createdAt-a.createdAt);$('total').textContent=ideas.length;$('lgscCount').textContent=ideas.filter(x=>toolKey(x.tool)==='lgsc').length;$('qbotCount').textContent=ideas.filter(x=>toolKey(x.tool)==='qbot').length;const today=new Date();today.setHours(0,0,0,0);$('todayCount').textContent=ideas.filter(x=>Number(x.createdAt)>=today.getTime()).length;$('wall').innerHTML=ideas.length?ideas.map(x=>`<article style="--note-font:${esc(noteFont(x.fontKey))};--idea-font-size:${esc(x.fontSize||26)}px" data-font-key="${esc(x.fontKey||'pen')}" data-tool-key="${esc(toolKey(x.tool))}" class="note stage-before ${String(x.id)===String(focusedIdeaId)?'note-focused':''}" data-note-id="${esc(x.id)}" tabindex="0" role="button" aria-label="${esc(x.drawNo)} ${esc(x.tool||'LGSC')} 아이디어 선택"><button type="button" class="note-delete-btn" data-delete-id="${esc(x.id)}" title="메모 삭제" aria-label="메모 삭제">✕</button><i class="pin"></i><span class="paper-surface" aria-hidden="true"></span><span class="paper-detail" aria-hidden="true"></span><div class="ntop"><span class="note-title">${esc(x.tool||'LGSC')}</span><span>${esc(x.drawNo)}</span></div><div class="part"><b>나의 AX Tool 사용경험</b><p>${esc(x.experience)}</p></div><div class="part"><b>나는 이런 AX Tool을 원해요~~</b><p>${esc(x.wish)}</p></div><div class="nfoot"><span>${esc(maskName(x.name))} · ${esc(maskNo(x.empNo))}</span><span>${formatDate(x.createdAt,true)}</span></div></article>`).join(''):'<div class="empty-board"><b>AX Tool 활용 경험과 아이디어를 모아보세요</b><p>참여 화면에서 첫 의견을 등록해 주세요.</p></div>';$('rows').innerHTML=ideas.map((x,i)=>`<tr data-row-index="${i}"><td>${ideas.length-i}</td><td><b>${esc(x.tool||'LGSC')}</b></td><td>${esc(x.experience)}</td><td>${esc(x.wish)}</td><td>${esc(x.fontSize||20)}px</td><td><b>${esc(x.name)}</b><br>${esc(x.empNo)}</td><td>${formatDate(x.createdAt,false)}</td><td><button type="button" class="delete-btn" data-delete-id="${esc(x.id)}" data-delete-index="${i}">삭제</button></td></tr>`).join('')}
   let focusedClone=null,focusedSource=null,focusMotionBusy=false,registrationReturnTimer=0;
 function focusTransformFor(rect){const scale=Math.max(1.05,Math.min(1.85,(innerWidth*.82)/rect.width,(innerHeight*.76)/rect.height));return {scale,transform:`translate(${innerWidth/2-(rect.left+rect.width/2)}px,${innerHeight/2-(rect.top+rect.height/2)}px) scale(${scale})`}}
 async function fitFocusedTitle(clone){
@@ -1146,7 +1158,7 @@ function fitFullscreenWall(){
   for(let cols=1;cols<=Math.min(count,12);cols++){
    const width=cols*cardW+(cols-1)*gap+20;
    wall.style.gridTemplateColumns=`repeat(${cols},${cardW}px)`;wall.style.width=`${width}px`;void wall.offsetHeight;
-   const rows=Math.ceil(count/cols);const noteH=Math.max(440,...[...wall.querySelectorAll('.note:not(.idea-focus-clone)')].map(n=>n.offsetHeight));const height=rows*noteH+(rows-1)*gap+20;
+   const rows=Math.ceil(count/cols);const noteH=Math.max(300,...[...wall.querySelectorAll('.note:not(.idea-focus-clone)')].map(n=>n.offsetHeight));const height=rows*noteH+(rows-1)*gap+20;
    const scale=Math.min((vw-110)/width,(vh-50)/height,1);
    if(scale>best.scale)best={scale,cols,width,height};
   }
@@ -1215,7 +1227,7 @@ $('ideaForm').onsubmit = async (e) => {
         wish: lgscWish,
         empNo: empNo,
         name: name,
-        fontSize: 20, // 가독성 최적 기본 글자 크기
+        fontSize: 26, // [수정 의도] 사용자 요청: 한 단계 확대 기본값 26px
         fontKey: fontKey,
         drawNo: `A-${String(currentMaxDraw).padStart(3, '0')}`,
         createdAt: Date.now()
