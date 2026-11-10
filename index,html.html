@@ -795,6 +795,155 @@ body.fullscreen-wall-only #wall .note[data-tool-key="qbot"] .pin {
   background: #f59e0b;
   box-shadow: 0 0 8px #f59e0b;
 }
+
+/* [수정 의도] 사용자 요청: QR 카드를 화면 맨 왼쪽에 딱 밀착 배치 */
+.fullscreen-qr-card {
+  display: none;
+  position: fixed !important;
+  left: 0 !important;
+  top: 36px !important;
+  transform: none !important;
+  width: 250px !important;
+  background: rgba(255, 255, 255, 0.94) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1.5px solid rgba(165, 0, 52, 0.22) !important;
+  border-left: none !important;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-top-right-radius: 20px !important;
+  border-bottom-right-radius: 20px !important;
+  box-shadow: 4px 14px 34px rgba(15, 23, 42, 0.22), 2px 2px 6px rgba(165, 0, 52, 0.08) !important;
+  padding: 16px 14px 14px !important;
+  box-sizing: border-box !important;
+  z-index: 60 !important;
+  text-align: center !important;
+  font-family: 'LGSC Mixed Font', 'LG Smart Regular', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  transition: transform 0.25s ease, opacity 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+body.fullscreen-wall-only .fullscreen-qr-card {
+  display: flex !important;
+  flex-direction: column !important;
+  animation: qrCardFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+@keyframes qrCardFadeIn {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fullscreen-qr-card .qr-card-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin-bottom: 10px !important;
+  padding: 0 4px !important;
+}
+
+.fullscreen-qr-card .qr-badge {
+  font-size: 13px !important;
+  font-weight: 900 !important;
+  color: var(--lg, #a50034) !important;
+  letter-spacing: -0.02em !important;
+}
+
+.fullscreen-qr-card .qr-toggle-btn {
+  border: 1px solid #e2e8f0 !important;
+  background: #fff !important;
+  color: #64748b !important;
+  border-radius: 6px !important;
+  width: 22px !important;
+  height: 22px !important;
+  line-height: 1 !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  display: grid !important;
+  place-items: center !important;
+  padding: 0 !important;
+  transition: background 0.15s, color 0.15s !important;
+}
+
+.fullscreen-qr-card .qr-toggle-btn:hover {
+  background: #fee2e2 !important;
+  color: #b91c1c !important;
+}
+
+.fullscreen-qr-card .qr-card-body {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  transition: max-height 0.3s ease, opacity 0.2s ease !important;
+}
+
+.fullscreen-qr-card.is-minimized .qr-card-body {
+  display: none !important;
+}
+
+.fullscreen-qr-card.is-minimized {
+  padding-bottom: 6px !important;
+  width: 190px !important;
+}
+
+.fullscreen-qr-card .qr-image-wrap {
+  background: #ffffff !important;
+  padding: 8px !important;
+  border-radius: 14px !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06) !important;
+  display: inline-flex !important;
+}
+
+.fullscreen-qr-card .qr-img {
+  display: block !important;
+  width: 175px !important;
+  height: 175px !important;
+  border-radius: 6px !important;
+}
+
+.fullscreen-qr-card .qr-guide {
+  margin-top: 9px !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  color: #334155 !important;
+  letter-spacing: -0.03em !important;
+}
+
+.fullscreen-qr-card .qr-url-link {
+  display: block !important;
+  margin-top: 6px !important;
+  padding: 6px 8px !important;
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 8px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  color: #0369a1 !important;
+  text-decoration: underline !important;
+  word-break: break-all !important;
+  line-height: 1.25 !important;
+  transition: background 0.15s, color 0.15s !important;
+}
+
+.fullscreen-qr-card .qr-url-link:hover {
+  background: #e0f2fe !important;
+  color: #0284c7 !important;
+}
+
+@media (max-width: 900px) {
+  .fullscreen-qr-card {
+    left: 0 !important;
+    transform: none !important;
+    width: 210px !important;
+    top: 14px !important;
+    padding: 12px 10px 10px !important;
+  }
+  .fullscreen-qr-card .qr-img {
+    width: 140px !important;
+    height: 140px !important;
+  }
+}
 </style></head><body class="theme-stadium">
 <header><div class="head"><button id="brand" class="brand"><span class="logo">💡</span><span><span class="title">AX Tool 활용 아이디어</span><span class="sub">업무 개선 아이디어 공유 보드 <b id="hint"></b></span></span></button><div class="actions"><span class="status-dot" id="serverStatusDot" title="Firebase 실시간 서버 연결됨" aria-label="서버 상태"></span><button id="formTab" class="btn on">참여 화면</button><button id="dashTab" class="btn">대시보드</button><button id="fullscreenBtn" type="button" class="btn fullscreen-btn" title="전체 화면 전환" aria-label="전체 화면 전환" aria-pressed="false"><span id="fullscreenIcon" class="fullscreen-icon">⛶</span><span id="fullscreenLabel" class="fullscreen-label">전체 화면</span></button></div></div></header><div id="techOlympicsVisual" class="tech-olympics-visual" aria-hidden="true"><div id="olympicsBgA" class="olympics-bg active" style="background-image: url(&quot;https://live.lge.co.kr/wp-content/uploads/2024/11/2411-lg-service-3.jpg&quot;);"></div><div id="olympicsBgB" class="olympics-bg"></div><div class="olympics-shade"></div></div><div id="focusBackdrop" class="focus-backdrop" aria-hidden="true"></div>
 <main><section id="formView" class=""><form id="ideaForm" class="form"><h2>AX Tool 활용 경험과 아이디어를 남겨주세요</h2><div class="desc">LGSC 또는 Qbot 사용시 경험과 원하는 기능을 자유롭게 작성해 주세요.</div>
@@ -838,7 +987,23 @@ body.fullscreen-wall-only #wall .note[data-tool-key="qbot"] .pin {
   </div>
 
   <div class="compact-auth-row"><div class="field"><label for="empNo">사번</label><input id="empNo" required="" placeholder="사번 입력"></div><div class="field"><label for="name">이름</label><input id="name" required="" placeholder="이름 입력"></div></div><button class="submit">아이디어 제출하기</button><div id="formMsg" class="msg hide"></div></form></section>
-  <section id="dashView" class="hide"><div class="stats"><div class="stat"><div id="total" class="num">0</div><div class="lab">전체 참여</div></div><div class="stat"><div id="lgscCount" class="num">0</div><div class="lab">LGSC</div></div><div class="stat"><div id="qbotCount" class="num">0</div><div class="lab">Qbot</div></div><div class="stat"><div id="todayCount" class="num">0</div><div class="lab">오늘 참여</div></div></div><div class="boardhead"><div><h2 id="dashTitle">실시간 아이디어 월</h2><div id="dashDesc" class="desc">새로운 아이디어가 가장 앞에 표시됩니다. 카드를 선택하면 확대됩니다.</div><div class="tool-color-legend" aria-label="활용 Tool별 메모 색상"><span class="tool-color-chip lgsc"><i></i>LGSC</span><span class="tool-color-chip qbot"><i></i>Qbot</span></div></div><div class="focus-toolbar"><button id="clearFocus" type="button" class="focus-clear hide">선택 해제</button></div></div><div id="wall" class="board" data-fit-scale="1.0000" style=""><div class="empty-board"><b>AX Tool 활용 경험과 아이디어를 모아보세요</b><p>참여 화면에서 첫 의견을 등록해 주세요.</p></div></div><div id="admin" class="listcard hide"><div class="listhead"><div><b>아이디어 통합 목록 · 관리자 모드</b><div class="desc">이름과 사번 원본이 표시됩니다. 이 관리 화면은 인증 기능이 없으므로 공개 배포 시 별도 접근 제어가 필요합니다.</div></div><div class="admin-actions"><button id="pptBtn" class="btn">PPT 출력</button><button id="mailBtn" class="btn primary">PPT 자동 발송</button><button id="closeAdmin" class="btn">닫기</button></div></div><div class="rolling-admin-panel"><div class="rolling-admin-head"><b>대시보드 배경 롤링 설정</b><div class="rolling-admin-actions"><button id="rollingApply" type="button" class="rolling-admin-btn primary">설정 적용</button><button id="rollingNextAdmin" type="button" class="rolling-admin-btn">다음 배경</button></div></div><div class="rolling-admin-grid"><div class="rolling-setting"><label for="rollingEnabledAdmin">자동 롤링</label><div class="rolling-switch"><input id="rollingEnabledAdmin" type="checkbox"><span>배경 자동 전환 사용</span></div></div><div class="rolling-setting"><label for="rollingIntervalAdmin">전환 간격 직접 입력</label><div style="display:flex;align-items:center;gap:7px"><input id="rollingIntervalAdmin" type="number" min="3" max="600" step="1" inputmode="numeric" value="8"><b>초</b></div></div><div class="rolling-setting"><label>현재 상태</label><div id="rollingStatusAdmin" class="rolling-status-admin" style="color: rgb(100, 116, 139);">자동 롤링 정지</div></div></div><div class="rolling-help">3초부터 600초까지 설정할 수 있습니다. 설정 적용 시 입력한 시간부터 새 간격으로 다시 시작합니다.</div></div><div class="theme-panel"><div class="theme-panel-title"><b>대시보드 배경 선택</b><div style="display:flex;align-items:center;gap:8px"><span class="desc">선택 즉시 아이디어 월에 적용됩니다.</span><button type="button" id="restoreThemes" class="theme-restore" disabled="">삭제 배경 복원</button></div></div><div class="theme-grid"><button type="button" class="theme-option active" data-theme="stadium"><span class="theme-preview preview-stadium"></span><span class="theme-delete" data-delete-theme="stadium" role="button" tabindex="0" aria-label="이 배경 삭제">×</span><span class="theme-name">1. 미래 기술 경기장</span></button><button type="button" class="theme-option" data-theme="diagnostic"><span class="theme-preview preview-diagnostic"></span><span class="theme-delete" data-delete-theme="diagnostic" role="button" tabindex="0" aria-label="이 배경 삭제">×</span><span class="theme-name">2. 스마트 진단센터</span></button><button type="button" class="theme-option" data-theme="medal"><span class="theme-preview preview-medal"></span><span class="theme-delete" data-delete-theme="medal" role="button" tabindex="0" aria-label="이 배경 삭제">×</span><span class="theme-name">3. 기술 메달·포디움</span></button><button type="button" class="theme-option" data-theme="toolboard"><span class="theme-preview preview-toolboard"></span><span class="theme-delete" data-delete-theme="toolboard" role="button" tabindex="0" aria-label="이 배경 삭제">×</span><span class="theme-name">4. 서비스 공구보드</span></button><button type="button" class="theme-option" data-theme="global"><span class="theme-preview preview-global"></span><span class="theme-delete" data-delete-theme="global" role="button" tabindex="0" aria-label="이 배경 삭제">×</span><span class="theme-name">5. 글로벌 네트워크</span></button></div></div><div id="notice" class="notice hide"></div><div class="tablewrap"><table><thead><tr><th>No.</th><th>활용 Tool</th><th>나의 AX Tool 사용경험</th><th>나는 이런 AX Tool을 원해요~~</th><th>글자 크기</th><th>참여자</th><th>등록 시각</th><th>관리</th></tr></thead><tbody id="rows"></tbody></table></div></div></section></main>
+    <section id="dashView" class="hide">
+    <!-- [수정 의도] 사용자 요청: 전체 화면 모드 좌측 1/4 지점 QR 코드 및 접속 URL 안내 카드 -->
+    <aside id="fullscreenQrCard" class="fullscreen-qr-card" aria-label="아이디어 참여 모바일 접속 QR">
+      <div class="qr-card-header">
+        <span class="qr-badge">📱 모바일 실시간 참여</span>
+        <button type="button" id="toggleQrCardBtn" class="qr-toggle-btn" title="QR 카드 최소화/펼치기" aria-label="QR 카드 최소화">－</button>
+      </div>
+      <div class="qr-card-body">
+        <div class="qr-image-wrap">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsAQMAAABDsxw2AAAABlBMVEX///8AAABVwtN+AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABeklEQVRoge2ZQY6DMAxFjWbRJUfgKBytHI2jcASWLFD/4NiGoFaaZTzV/6vUeXTzFdtxRKjvU4/QdPwaN8Hyg6l/yXhuEEuDvcw039vKEvBl+R9iiTB1T420MBaRp2HFaWIpMT2LtodViOXGpMN8RIbdosQyYkXm6fwoX7inRcQSYQh5afuzXSHWDKvVncFw+qOItcLcUz11sAOo9mrifEAT53MllgaTKi96PdvLx4odIpYIuzrF6fqi7LmnV1Il1hqTElAjY6++Rkv0IcQyYFbEIlu6NFtiiyixNBiiiInVMx10yKcKSKw9Zp66Zl+unf2+kiqxJJhly6hyi48QYfb2xDJho/k3ifUhA2yaCFRTYGIZsEqROBXwY7m/QcQaYveplNhLStzMbn0IsfbYNe+V24Oye3rrQ4g1x0Ygnr3mI2IX5qK3pEosE+bNfvVcCRDLiNlZHHBfEsuEFZ2jKOvwfU6/1xcBYs0xhM56dr6k1AeQ2P/BqG/TL8xITbg65yAfAAAAAElFTkSuQmCC" alt="AX Tool 접속 QR 코드" class="qr-img" width="175" height="175">
+        </div>
+        <div class="qr-guide">스마트폰 카메라로 스캔하세요</div>
+        <a href="https://axtool.netlify.app/" target="_blank" rel="noopener noreferrer" class="qr-url-link" title="새 탭으로 열기">
+          https://axtool.netlify.app/
+        </a>
+      </div>
+    </aside><div class="stats"><div class="stat"><div id="total" class="num">0</div><div class="lab">전체 참여</div></div><div class="stat"><div id="lgscCount" class="num">0</div><div class="lab">LGSC</div></div><div class="stat"><div id="qbotCount" class="num">0</div><div class="lab">Qbot</div></div><div class="stat"><div id="todayCount" class="num">0</div><div class="lab">오늘 참여</div></div></div><div class="boardhead"><div><h2 id="dashTitle">실시간 아이디어 월</h2><div id="dashDesc" class="desc">새로운 아이디어가 가장 앞에 표시됩니다. 카드를 선택하면 확대됩니다.</div><div class="tool-color-legend" aria-label="활용 Tool별 메모 색상"><span class="tool-color-chip lgsc"><i></i>LGSC</span><span class="tool-color-chip qbot"><i></i>Qbot</span></div></div><div class="focus-toolbar"><button id="clearFocus" type="button" class="focus-clear hide">선택 해제</button></div></div><div id="wall" class="board" data-fit-scale="1.0000" style=""><div class="empty-board"><b>AX Tool 활용 경험과 아이디어를 모아보세요</b><p>참여 화면에서 첫 의견을 등록해 주세요.</p></div></div><div id="admin" class="listcard hide"><div class="listhead"><div><b>아이디어 통합 목록 · 관리자 모드</b><div class="desc">이름과 사번 원본이 표시됩니다. 이 관리 화면은 인증 기능이 없으므로 공개 배포 시 별도 접근 제어가 필요합니다.</div></div><div class="admin-actions"><button id="pptBtn" class="btn">PPT 출력</button><button id="mailBtn" class="btn primary">PPT 자동 발송</button><button id="closeAdmin" class="btn">닫기</button></div></div><div class="rolling-admin-panel"><div class="rolling-admin-head"><b>대시보드 배경 롤링 설정</b><div class="rolling-admin-actions"><button id="rollingApply" type="button" class="rolling-admin-btn primary">설정 적용</button><button id="rollingNextAdmin" type="button" class="rolling-admin-btn">다음 배경</button></div></div><div class="rolling-admin-grid"><div class="rolling-setting"><label for="rollingEnabledAdmin">자동 롤링</label><div class="rolling-switch"><input id="rollingEnabledAdmin" type="checkbox"><span>배경 자동 전환 사용</span></div></div><div class="rolling-setting"><label for="rollingIntervalAdmin">전환 간격 직접 입력</label><div style="display:flex;align-items:center;gap:7px"><input id="rollingIntervalAdmin" type="number" min="3" max="600" step="1" inputmode="numeric" value="8"><b>초</b></div></div><div class="rolling-setting"><label>현재 상태</label><div id="rollingStatusAdmin" class="rolling-status-admin" style="color: rgb(100, 116, 139);">자동 롤링 정지</div></div></div><div class="rolling-help">3초부터 600초까지 설정할 수 있습니다. 설정 적용 시 입력한 시간부터 새 간격으로 다시 시작합니다.</div></div><div class="theme-panel"><div class="theme-panel-title"><b>대시보드 배경 선택</b><div style="display:flex;align-items:center;gap:8px"><span class="desc">선택 즉시 아이디어 월에 적용됩니다.</span><button type="button" id="restoreThemes" class="theme-restore" disabled="">삭제 배경 복원</button></div></div><div class="theme-grid"><button type="button" class="theme-option active" data-theme="stadium"><span class="theme-preview preview-stadium"></span><span class="theme-delete" data-delete-theme="stadium" role="button" tabindex="0" aria-label="이 배경 삭제">×</span><span class="theme-name">1. 미래 기술 경기장</span></button><button type="button" class="theme-option" data-theme="diagnostic"><span class="theme-preview preview-diagnostic"></span><span class="theme-delete" data-delete-theme="diagnostic" role="button" tabindex="0" aria-label="이 배경 삭제">×</span><span class="theme-name">2. 스마트 진단센터</span></button><button type="button" class="theme-option" data-theme="medal"><span class="theme-preview preview-medal"></span><span class="theme-delete" data-delete-theme="medal" role="button" tabindex="0" aria-label="이 배경 삭제">×</span><span class="theme-name">3. 기술 메달·포디움</span></button><button type="button" class="theme-option" data-theme="toolboard"><span class="theme-preview preview-toolboard"></span><span class="theme-delete" data-delete-theme="toolboard" role="button" tabindex="0" aria-label="이 배경 삭제">×</span><span class="theme-name">4. 서비스 공구보드</span></button><button type="button" class="theme-option" data-theme="global"><span class="theme-preview preview-global"></span><span class="theme-delete" data-delete-theme="global" role="button" tabindex="0" aria-label="이 배경 삭제">×</span><span class="theme-name">5. 글로벌 네트워크</span></button></div></div><div id="notice" class="notice hide"></div><div class="tablewrap"><table><thead><tr><th>No.</th><th>활용 Tool</th><th>나의 AX Tool 사용경험</th><th>나는 이런 AX Tool을 원해요~~</th><th>글자 크기</th><th>참여자</th><th>등록 시각</th><th>관리</th></tr></thead><tbody id="rows"></tbody></table></div></div></section></main>
 <div id="dashAuthModal" class="modalbg hide" role="dialog" aria-modal="true" aria-labelledby="dashAuthTitle">
   <div class="modal">
     <h3 id="dashAuthTitle">🔒 대시보드 비밀번호 확인</h3>
@@ -960,7 +1125,7 @@ let focusedIdeaId=null;
 const KEY='ax-tool-ideas-v2',DELETED_KEY='ax-tool-deleted-ideas-v1',THEME_KEY='ax-tool-olympics-theme-v1',DELETED_THEME_KEY='ax-tool-deleted-themes-v1',CH='ax-tool-ideas-live';let deletedIds=new Set((()=>{try{return JSON.parse(localStorage.getItem(DELETED_KEY))||[]}catch{return[]}})());let selectedTheme=localStorage.getItem(THEME_KEY)||'stadium';let deletedThemes=new Set((()=>{try{return JSON.parse(localStorage.getItem(DELETED_THEME_KEY))||[]}catch{return[]}})());let mode='wall',view='dash',clicks=0,timer,channel;
 const seed=[];
 function isValidIdea(x){return !!(x&&typeof x==='object'&&(x.experience||x.wish||x.situation||x.usage||x.effect||x.name||x.empNo||x.drawNo))}
-  function normalizeIdeas(list){return (Array.isArray(list)?list:[]).filter(isValidIdea).map((x,i)=>{if(x.id===undefined||x.id===null||String(x.id).trim()==='')x.id=`recovered-${x.createdAt||Date.now()}-${i}`;x.tool=String(x.tool||'LGSC').includes('Qbot')?'Qbot':'LGSC';x.experience=String(x.experience||x.situation||x.usage||'').trim();x.wish=String(x.wish||x.effect||'').trim();x.fontSize=Math.min(32,Math.max(16,Number(x.fontSize)||20));x.fontKey=['pen','gaegu','melody'].includes(x.fontKey)?x.fontKey:'pen';delete x.product;return x}).filter(x=>!deletedIds.has(String(x.id)))}
+  function normalizeIdeas(list){return (Array.isArray(list)?list:[]).filter(isValidIdea).map((x,i)=>{if(x.id===undefined||x.id===null||String(x.id).trim()==='')x.id=`recovered-${x.createdAt||Date.now()}-${i}`;x.tool=String(x.tool||'LGSC').includes('Qbot')?'Qbot':'LGSC';x.experience=String(x.experience||x.situation||x.usage||'').trim();x.wish=String(x.wish||x.effect||'').trim();x.fontSize=Math.min(32,Math.max(16,Number(x.fontSize)||26));x.fontKey=['pen','gaegu','melody','noto'].includes(x.fontKey)?x.fontKey:'pen';delete x.product;return x}).filter(x=>!deletedIds.has(String(x.id)))}
   let ideas=(()=>{try{const raw=localStorage.getItem(KEY);return raw===null?normalizeIdeas(seed):normalizeIdeas(JSON.parse(raw))}catch{return normalizeIdeas(seed)}})();
 /* 이전 버전에서 저장된 빈 레코드(화면의 내용 없는 2번 항목)를 시작 즉시 제거 */
 localStorage.setItem(KEY,JSON.stringify(ideas));
@@ -1046,6 +1211,58 @@ async function focusIdea(id){id=String(id);if(focusMotionBusy)return;if(focusedI
     clearIdeaFocus();
   };const focusTarget=focusTransformFor(rect);const a=clone.animate([{transform:'translate(0,0) scale(1)',filter:'drop-shadow(0 8px 12px #07111f25)'},{transform:focusTarget.transform,filter:'drop-shadow(0 30px 42px #07111f65)'}],{duration:560,easing:'cubic-bezier(.22,.78,.2,1)',fill:'forwards'});focusMotionBusy=false;setTimeout(()=>{if(clone.isConnected&&focusedClone===clone){const focusedRect=clone.getBoundingClientRect();a.cancel();clone.style.left=(focusedRect.left/focusTarget.scale)+'px';clone.style.top=(focusedRect.top/focusTarget.scale)+'px';clone.style.transform='none';clone.style.zoom=String(focusTarget.scale);clone.style.filter='drop-shadow(0 30px 42px #07111f65)';clone.style.willChange='auto';void clone.offsetHeight;fitFocusedTitle(clone);const crispRect=clone.getBoundingClientRect();clone.style.left=(parseFloat(clone.style.left)+(innerWidth/2-(crispRect.left+crispRect.width/2))/focusTarget.scale)+'px';clone.style.top=(parseFloat(clone.style.top)+(innerHeight/2-(crispRect.top+crispRect.height/2))/focusTarget.scale)+'px';void clone.offsetHeight;}},575)}
 async function clearIdeaFocus(){clearTimeout(registrationReturnTimer);registrationReturnTimer=0;if(focusMotionBusy||!focusedIdeaId)return;focusMotionBusy=true;const clone=focusedClone,source=focusedSource;if(clone&&source){const cr=clone.getBoundingClientRect(),er=source.getBoundingClientRect();const dx=er.left-cr.left,dy=er.top-cr.top,sx=er.width/cr.width,sy=er.height/cr.height;try{await clone.animate([{transform:'translate(0,0) scale(1)',opacity:1,filter:'drop-shadow(0 30px 42px #07111f65)'},{transform:`translate(${dx}px,${dy}px) scale(${sx},${sy})`,opacity:1,filter:'drop-shadow(0 4px 7px #07111f20)'}],{duration:480,easing:'cubic-bezier(.4,0,.2,1)',fill:'forwards'}).finished}catch(e){}}clone?.remove();source?.classList.remove('focus-source-hidden');focusedClone=focusedSource=null;focusedIdeaId=null;document.body.classList.remove('note-focus-active');$('wall').classList.remove('has-focus');$('focusBackdrop').classList.remove('show');$('clearFocus').classList.add('hide');focusMotionBusy=false}
+
+/* [수정 의도] 신규 등록 시 화면 중앙 3초 줌인 팝업 큐(Queue) 시스템
+   - 동시 제출(LGSC+Qbot) 또는 연달아 접수 시 순차 릴레이 팝업(3초 유지 ➔ 복귀 ➔ 다음 카드)
+   - 대시보드 화면(dash) 또는 전체 화면(fullscreen-wall-only) 모드에서만 팝업 실행
+*/
+const newIdeaQueue = [];
+let isProcessingNewIdeaQueue = false;
+let isInitialFirebaseSnapshot = true;
+
+async function processNewIdeaQueue() {
+  if (isProcessingNewIdeaQueue) return;
+  if (newIdeaQueue.length === 0) return;
+  isProcessingNewIdeaQueue = true;
+  try {
+    while (newIdeaQueue.length > 0) {
+      const nextId = newIdeaQueue.shift();
+      if (!nextId) continue;
+
+      // 대시보드 뷰 또는 전체 화면 모드일 때만 연출 (입력 폼 작성 중 방해 금지)
+      const isDashboardActive = (view === 'dash') || document.body.classList.contains('fullscreen-wall-only');
+      if (!isDashboardActive) continue;
+
+      // DOM에 렌더링될 때까지 안전하게 대기
+      let cardEl = null;
+      for (let attempt = 0; attempt < 12; attempt++) {
+        cardEl = document.querySelector(`[data-note-id="${CSS.escape(String(nextId))}"]`);
+        if (cardEl) break;
+        await new Promise(r => setTimeout(r, 100));
+      }
+      if (!cardEl) continue;
+
+      // 1. 화면 중앙 줌인 팝업
+      await focusIdea(nextId);
+      // 2. 3초간 화면 중앙에 대형 확대 상태 유지 (사용자 합의 사항)
+      await new Promise(r => setTimeout(r, 3000));
+      // 3. 원래 위치로 부드럽게 복귀
+      await clearIdeaFocus();
+      // 4. 다음 카드 릴레이 전 0.5초 호흡(트랜지션 대기)
+      await new Promise(r => setTimeout(r, 500));
+    }
+  } catch (err) {
+    console.warn('[Queue] 신규 카드 줌인 팝업 연출 중 예외:', err);
+  } finally {
+    isProcessingNewIdeaQueue = false;
+  }
+}
+
+function enqueueNewIdea(id) {
+  if (!id) return;
+  newIdeaQueue.push(String(id));
+  processNewIdeaQueue();
+}
 const noteTypographyObserver=new MutationObserver(()=>fitNoteTypography($('wall')));noteTypographyObserver.observe($('wall'),{childList:true});window.addEventListener('resize',()=>fitNoteTypography($('wall')),{passive:true});
 $('wall').addEventListener('pointerover',e=>{const n=e.target.closest('[data-note-id]');if(n&&!$('wall').classList.contains('has-focus')&&!(e.relatedTarget&&n.contains(e.relatedTarget)))n.classList.add('is-fluttering')});
 $('wall').addEventListener('pointerout',e=>{const n=e.target.closest('[data-note-id]');if(n&&!(e.relatedTarget&&n.contains(e.relatedTarget)))n.classList.remove('is-fluttering')});
@@ -1244,7 +1461,7 @@ $('ideaForm').onsubmit = async (e) => {
         wish: qbotWish,
         empNo: empNo,
         name: name,
-        fontSize: 20,
+        fontSize: 26, // [수정 의도] LGSC와 동일하게 기본 26px로 통일하여 여백 불균형 해소
         fontKey: fontKey,
         drawNo: `A-${String(currentMaxDraw).padStart(3, '0')}`,
         createdAt: Date.now() + 1
@@ -1260,6 +1477,7 @@ $('ideaForm').onsubmit = async (e) => {
         save();
         channel?.postMessage({type: 'add', item: item});
         render();
+        enqueueNewIdea(item.id);
       }
     }
 
@@ -1295,10 +1513,19 @@ $('ideaForm').onsubmit = async (e) => {
   }
 };
 
-/* [수정 의도] Firestore 실시간 구독 (onSnapshot) 연결 */
+/* [수정 의도] Firestore 실시간 구독 (onSnapshot) 연결 및 신규 등록 감지 팝업 연동 */
 if (isFirebaseConnected && db) {
   db.collection('ideas').onSnapshot((snapshot) => {
     const serverIdeas = [];
+    const addedIds = [];
+
+    // [수정 의도] 실시간 신규 추가된 문서 ID 감지
+    snapshot.docChanges().forEach((change) => {
+      if (change.type === 'added') {
+        addedIds.push(change.doc.id);
+      }
+    });
+
     snapshot.forEach((doc) => {
       serverIdeas.push({ id: doc.id, ...doc.data() });
     });
@@ -1307,6 +1534,14 @@ if (isFirebaseConnected && db) {
     save();
     render();
     updateServerStatus(true, '● Firebase 실시간 서버 연결됨');
+
+    // [수정 의도] 최초 실행 시 전체 목록이 added로 들어오므로 스킵하고,
+    // 이후 모바일 등에서 새로 들어온 진짜 신규 카드만 3초 줌인 팝업 큐에 등록
+    if (isInitialFirebaseSnapshot) {
+      isInitialFirebaseSnapshot = false;
+    } else {
+      addedIds.forEach(id => enqueueNewIdea(id));
+    }
   }, (err) => {
     console.error('[Firebase] 실시간 구독 에러 (보안 규칙 확인 필요):', err);
     updateServerStatus(false, '● Firebase 권한 오류 (Firestore 규칙 확인 필요)');
@@ -1440,7 +1675,19 @@ applyTextareaFont('pen');
   });
   $('dashAuthModal').addEventListener('click', (e) => {
     if (e.target === $('dashAuthModal')) closeAuthModal();
-  });$('closeAdmin').onclick=()=>toggleAdmin(true);$('brand').onclick=()=>{clicks++;clearTimeout(timer);$('hint').textContent='';if(clicks>=3){clicks=0;show('dash');if(mode!=='admin')toggleAdmin()}else timer=setTimeout(()=>{clicks=0;$('hint').textContent=''},1500)};window.addEventListener('storage',e=>{if(e.key===THEME_KEY&&e.newValue){applyTheme(e.newValue,false);return}if(e.key===DELETED_THEME_KEY){deletedThemes=new Set(JSON.parse(e.newValue||'[]')||[]);renderThemeChoices();if(deletedThemes.has(selectedTheme))applyTheme(ALL_THEMES.find(x=>!deletedThemes.has(x))||'',false);return}if(e.key===DELETED_KEY&&e.newValue){deletedIds=new Set(JSON.parse(e.newValue)||[]);ideas=ideas.filter(x=>!deletedIds.has(String(x.id)));render();return}if(e.key===KEY&&e.newValue){ideas=normalizeIdeas(JSON.parse(e.newValue)||[]);render()}});if('BroadcastChannel'in window){channel=new BroadcastChannel(CH);channel.onmessage=e=>{const data=e.data||{};if(data.type==='theme'){applyTheme(data.theme,false);return}if(data.type==='theme-delete'){deletedThemes.add(data.theme);localStorage.setItem(DELETED_THEME_KEY,JSON.stringify([...deletedThemes]));renderThemeChoices();if(selectedTheme===data.theme)applyTheme(ALL_THEMES.find(x=>!deletedThemes.has(x))||'',false);return}if(data.type==='theme-restore'){restoreThemes(false);return}if(data.type==='delete'){deleteIdea(data.id,false);return}const item=data.type==='add'?data.item:data;if(item?.id&&!deletedIds.has(String(item.id))&&!ideas.some(x=>String(x.id)===String(item.id))){ideas.unshift(item);save();render()}}}
+  });$('closeAdmin').onclick=()=>toggleAdmin(true);$('brand').onclick=()=>{clicks++;clearTimeout(timer);$('hint').textContent='';if(clicks>=3){clicks=0;show('dash');if(mode!=='admin')toggleAdmin()}else timer=setTimeout(()=>{clicks=0;$('hint').textContent=''},1500)};window.addEventListener('storage',e=>{if(e.key===THEME_KEY&&e.newValue){applyTheme(e.newValue,false);return}if(e.key===DELETED_THEME_KEY){deletedThemes=new Set(JSON.parse(e.newValue||'[]')||[]);renderThemeChoices();if(deletedThemes.has(selectedTheme))applyTheme(ALL_THEMES.find(x=>!deletedThemes.has(x))||'',false);return}if(e.key===DELETED_KEY&&e.newValue){deletedIds=new Set(JSON.parse(e.newValue)||[]);ideas=ideas.filter(x=>!deletedIds.has(String(x.id)));render();return}if(e.key===KEY&&e.newValue){ideas=normalizeIdeas(JSON.parse(e.newValue)||[]);render()}});if('BroadcastChannel'in window){channel=new BroadcastChannel(CH);channel.onmessage=e=>{const data=e.data||{};if(data.type==='theme'){applyTheme(data.theme,false);return}if(data.type==='theme-delete'){deletedThemes.add(data.theme);localStorage.setItem(DELETED_THEME_KEY,JSON.stringify([...deletedThemes]));renderThemeChoices();if(selectedTheme===data.theme)applyTheme(ALL_THEMES.find(x=>!deletedThemes.has(x))||'',false);return}if(data.type==='theme-restore'){restoreThemes(false);return}if(data.type==='delete'){deleteIdea(data.id,false);return}const item=data.type==='add'?data.item:data;if(item?.id&&!deletedIds.has(String(item.id))&&!ideas.some(x=>String(x.id)===String(item.id))){ideas.unshift(item);save();render();enqueueNewIdea(item.id);}}}
   renderThemeChoices();applyTheme(selectedTheme,false);render();show('form');
+
+// [수정 의도] 사용자 요청: 전체 화면 QR 카드 최소화/펼치기 토글 로직
+const toggleQrBtn = $('toggleQrCardBtn');
+const qrCard = $('fullscreenQrCard');
+if (toggleQrBtn && qrCard) {
+  toggleQrBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isMin = qrCard.classList.toggle('is-minimized');
+    toggleQrBtn.textContent = isMin ? '＋' : '－';
+    toggleQrBtn.title = isMin ? 'QR 카드 펼치기' : 'QR 카드 최소화';
+  });
+}
 </script>
 </body></html>
