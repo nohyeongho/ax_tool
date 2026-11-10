@@ -312,46 +312,101 @@ body.fullscreen-wall-only .idea-focus-clone{font-size:inherit!important}
 .idea-focus-clone .pin{display:none!important;visibility:hidden!important;opacity:0!important}
 
 
-/* Balanced memo typography: sized to fit the fixed paper area across every handwriting font. */
-.board .note{height:520px!important;min-height:520px!important;padding:28px 22px 58px!important;box-sizing:border-box!important;overflow:visible!important}
-.board .note .ntop{font-size:21px!important;line-height:1.05!important;padding-bottom:8px!important;gap:8px!important}
-.board .note .ntop span:last-child{font-size:16px!important;line-height:1!important}
-.board .note .part{margin-top:10px!important}
-.board .note .part b{display:block;font-size:15px!important;line-height:1.08!important;margin:0 0 3px!important}
-.board .note .part p{font-size:20px!important;line-height:1.18!important;letter-spacing:-.025em!important;margin:2px 0 0!important;word-break:keep-all!important;overflow-wrap:anywhere!important}
-.board .note .nfoot{position:absolute!important;left:22px!important;right:22px!important;bottom:14px!important;font-size:15px!important;line-height:1.08!important;padding-top:7px!important}
-/* Font-metric compensation: Gowun Dodum is wider and taller than the handwriting fonts. */
-.board .note[data-font-key="gowun"] .ntop{font-size:18px!important;letter-spacing:-.035em!important}
-.board .note[data-font-key="gowun"] .ntop span:last-child{font-size:14px!important}
-.board .note[data-font-key="gowun"] .part b{font-size:13px!important;letter-spacing:-.035em!important}
-.board .note[data-font-key="gowun"] .part p{font-size:17px!important;line-height:1.28!important;letter-spacing:-.045em!important}
-.board .note[data-font-key="gowun"] .nfoot{font-size:13px!important;letter-spacing:-.035em!important}
-.board .note[data-font-key="gaegu"] .part p,.board .note[data-font-key="melody"] .part p,.board .note[data-font-key="pen"] .part p{font-size:21px!important}
-/* Automatic overflow fallback for unusually long submissions. */
-.board .note.note-compact .ntop{font-size:19px!important}.board .note.note-compact .part{margin-top:7px!important}.board .note.note-compact .part b{font-size:13px!important}.board .note.note-compact .part p{font-size:17px!important;line-height:1.13!important}.board .note.note-compact .nfoot{font-size:13px!important}
-.board .note.note-tight .ntop{font-size:17px!important}.board .note.note-tight .part{margin-top:5px!important}.board .note.note-tight .part b{font-size:12px!important}.board .note.note-tight .part p{font-size:15px!important;line-height:1.1!important}.board .note.note-tight .nfoot{font-size:12px!important}
-.idea-focus-clone{height:520px!important;min-height:520px!important}
-@media(max-width:700px){.board .note{height:480px!important;min-height:480px!important;padding:26px 19px 54px!important}.board .note .part p{font-size:19px!important}.board .note[data-font-key="gowun"] .part p{font-size:16px!important}}
-
-
-.board .note.note-micro .ntop{font-size:15px!important}.board .note.note-micro .ntop span:last-child{font-size:11px!important}.board .note.note-micro .part{margin-top:3px!important}.board .note.note-micro .part b{font-size:10px!important;line-height:1!important}.board .note.note-micro .part p{font-size:12px!important;line-height:1.04!important;letter-spacing:-.05em!important}.board .note.note-micro .nfoot{font-size:10px!important;padding-top:4px!important}
-
-/* Exact title requirement: repair stage and Tool name in one top line. */
-.board .note .ntop{align-items:flex-start!important}
-.board .note .ntop .note-title{display:block;min-width:0;max-width:calc(100% - 58px);white-space:normal;overflow-wrap:anywhere;word-break:keep-all;font-size:20px!important;line-height:1.12!important;font-weight:400}
-.board .note[data-font-key="gowun"] .ntop .note-title{font-size:16px!important;line-height:1.25!important;letter-spacing:-.045em!important}
-.board .note.note-compact .ntop .note-title{font-size:17px!important}.board .note.note-tight .ntop .note-title{font-size:15px!important}.board .note.note-micro .ntop .note-title{font-size:13px!important}
-
-
-/* Content-driven memo height: paper grows with its actual text. */
-.board{align-items:start!important}
-.board .note{height:auto!important;min-height:300px!important;padding:28px 22px 58px!important;align-self:start!important;overflow:visible!important}
-.board .note .nfoot{position:static!important;margin-top:16px!important;min-height:22px!important;padding-top:7px!important;display:flex!important;justify-content:space-between!important;gap:10px!important}
-.board .note .paper-surface{height:100%!important;bottom:auto!important}
-.board .note .paper-detail{height:100%!important;bottom:auto!important}
-.board .note.note-compact,.board .note.note-tight,.board .note.note-micro{height:auto!important}
-.idea-focus-clone{height:auto!important;min-height:300px!important}
-@media(max-width:700px){.board .note{height:auto!important;min-height:280px!important;padding:26px 19px 54px!important}}
+/* [수정 의도] 사용자 요청: 전체 화면 글씨체 한 단계 확대(20px->25px) 및 카드 하단 여백 제거, 세로 간격 균형 배치 */
+.board .note,
+.idea-focus-clone {
+  display: flex !important;
+  flex-direction: column !important;
+  height: auto !important;
+  min-height: 330px !important;
+  padding: 26px 22px 22px !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
+  align-self: start !important;
+}
+.board .note .ntop,
+.idea-focus-clone .ntop {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+  font-size: 25px !important;
+  line-height: 1.1 !important;
+  padding-bottom: 8px !important;
+  gap: 8px !important;
+}
+.board .note .ntop .note-title,
+.idea-focus-clone .ntop .note-title {
+  display: block;
+  min-width: 0;
+  max-width: calc(100% - 64px);
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+  font-size: 25px !important;
+  line-height: 1.12 !important;
+  font-weight: 400;
+}
+.board .note .ntop span:last-child,
+.idea-focus-clone .ntop span:last-child {
+  font-size: 19px !important;
+  line-height: 1.1 !important;
+  white-space: nowrap !important;
+}
+.board .note .part,
+.idea-focus-clone .part {
+  margin-top: 18px !important;
+}
+.board .note .part b,
+.idea-focus-clone .part b {
+  display: block;
+  font-size: 18px !important;
+  line-height: 1.15 !important;
+  margin: 0 0 6px !important;
+}
+.board .note .part p,
+.idea-focus-clone .part p {
+  font-size: var(--idea-font-size, 25px) !important;
+  line-height: 1.25 !important;
+  letter-spacing: -.025em !important;
+  margin: 0 !important;
+  word-break: keep-all !important;
+  overflow-wrap: anywhere !important;
+}
+.board .note .nfoot,
+.idea-focus-clone .nfoot {
+  position: static !important;
+  margin-top: auto !important;
+  font-size: 18px !important;
+  line-height: 1.15 !important;
+  min-height: 24px !important;
+  padding-top: 14px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+  border-top: 1px dashed var(--tool-line, #71523a35) !important;
+}
+.board .note .paper-surface,
+.idea-focus-clone .paper-surface {
+  height: 100% !important;
+  bottom: auto !important;
+}
+.board .note .paper-detail,
+.idea-focus-clone .paper-detail {
+  height: 100% !important;
+  bottom: auto !important;
+}
+@media (max-width: 700px) {
+  .board .note,
+  .idea-focus-clone {
+    height: auto !important;
+    min-height: 300px !important;
+    padding: 24px 18px 20px !important;
+  }
+  .board .note .part p,
+  .idea-focus-clone .part p {
+    font-size: 22px !important;
+  }
+}
 
 
 /* Tool-based memo colors. Stage no longer controls paper color. */
@@ -407,8 +462,8 @@ body.fullscreen-wall-only .idea-focus-clone .ntop span:last-child{font-size:10px
   .font-preview{margin-top:10px;padding:14px 16px;border:1px solid #ead9c0;border-radius:12px;background:#fffaf0;font-family:'Nanum Pen Script',cursive;line-height:1.2;color:#57331f}
   /* [수정 의도] 각 메모 카드가 저장된 개별 fontKey(나눔펜, 개구, 하이멜로디, Noto Sans)를 따르도록 CSS 변수 연결 */
   .board .note,.idea-focus-clone,.board .note .ntop,.board .note .part,.board .note .part b,.board .note .part p,.board .note .nfoot{font-family:var(--note-font,'Nanum Pen Script',cursive)!important}
-  .board .note .part p{font-size:var(--idea-font-size,20px)!important}
-  .idea-focus-clone .part p{font-size:var(--idea-font-size,20px)!important}
+  .board .note .part p{font-size:var(--idea-font-size,25px)!important}
+  .idea-focus-clone .part p{font-size:var(--idea-font-size,25px)!important}
   .tool-color-chip.qbot i{background:#a9d5eb}
   .board .note[data-tool-key="qbot"]{--tool-paper-top:#a9d5eb;--tool-paper-bottom:#d3edf5;--tool-ink:#254657;--tool-title:#214e65;--tool-muted:#527183;--tool-line:#315e7440}
   .idea-focus-clone[data-tool-key="qbot"]{--tool-paper-top:#a9d5eb;--tool-paper-bottom:#d3edf5;--tool-ink:#254657;--tool-title:#214e65;--tool-muted:#527183;--tool-line:#315e7440}
@@ -954,7 +1009,7 @@ async function fitFocusedTitle(clone){
  title.style.setProperty('max-width',available+'px','important');
  title.style.setProperty('white-space','nowrap','important');
  title.style.setProperty('overflow','visible','important');
- let low=7,high=document.body.classList.contains('fullscreen-wall-only')?18:20,best=low;
+ let low=7,high=document.body.classList.contains('fullscreen-wall-only')?24:26,best=low;
  for(let i=0;i<18;i++){
   const size=(low+high)/2;
   title.style.setProperty('font-size',size+'px','important');
